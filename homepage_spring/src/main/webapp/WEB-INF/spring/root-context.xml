@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context"
+    
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd">
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	
+	<!-- Transaction Manager -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+ 
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+       <tx:attributes>
+          <tx:method name="delete" rollback-for="Exception"/>
+          <!-- <tx:method name="reply" rollback-for="Exception"/> -->
+       </tx:attributes>
+    </tx:advice>
+ 
+    <aop:config>
+        <aop:pointcut id="transactionPointcut" expression="execution(* spring.sts.homepage.*.*Mgr.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="transactionPointcut" />
+    </aop:config>
+    
+    <context:component-scan base-package="www.deadlock.model.*" use-default-filters="false"> 
+      <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+      <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+   	</context:component-scan>
+   	
+   	
+   	<bean id="dataSource" 
+	destroy-method="close"
+	class="org.apache.commons.dbcp.BasicDataSource" 
+	p:driverClassName="oracle.jdbc.driver.OracleDriver" 
+	p:url="jdbc:oracle:thin:@localhost:1521:XE" 
+	p:username="soldesk"  
+	p:password="1234"  
+	/> 
+	
+	<!-- MyBatis SQL 실행 클래스  --> 
+    <!-- 아래부분은 매핑할 xml파일이 있는 패키지경로를 설정한다. -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="dataSource" />
+    <property name="typeAliasesPackage" value="spring.model.homepage" />
+    <property name="mapperLocations" value="classpath:mybatis/*.xml" />
+  	</bean>
+ 
+  	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+    <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+  	</bean>
+	
+	
+	<!-- 업로드 할시 -->
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="multipartResolver" 
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> 
+    </bean>
+    
+     <!-- tiles2 설정 -->
+    <!-- Root Context: defines shared resources visible to all other web components --> 
+    <bean id="tilesconfigurer"  
+        class="org.springframework.web.servlet.view.tiles2.TilesConfigurer"> 
+        <property name="definitions"> 
+            <list> 
+                <value>/WEB-INF/spring/main.xml</value> 
+                <value>/WEB-INF/spring/member.xml</value> 
+                <value>/WEB-INF/spring/bbs.xml</value> 
+                <value>/WEB-INF/spring/image.xml</value> 
+                <value>/WEB-INF/spring/guest.xml</value> 
+            </list>
+        </property> 
+    </bean>  
+    <bean id="viewResolver"  
+        class="org.springframework.web.servlet.view.UrlBasedViewResolver"> 
+        <property name="viewClass"> 
+            <value>org.springframework.web.servlet.view.tiles2.TilesView</value> 
+        </property>
+        <property name="order"><value>1</value></property>
+    </bean> 
+    
+    
+   <bean id="mailSender" class = "org.springframework.mail.javamail.JavaMailSenderImpl">
+      <property name="host" value="smtp.gmail.com" />
+      <property name="port" value="587" />
+      <property name="username" value="deadlock7683@gmail.com" />
+      <property name="password" value="2xlaghkdlxld" />
+      <property name="javaMailProperties">
+         <props>
+               <prop key="mail.transport.protocol">smtp</prop>
+               <prop key="mail.smtp.auth">true</prop>
+               <prop key="mail.smtp.starttls.enable">true</prop>
+               <prop key="mail.debug">true</prop>
+         </props>
+      </property>
+ 
+   </bean>
+		
+</beans>
