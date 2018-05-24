@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chat">
+
+<select id="crate_room_check" parameterType="String" resultType="int">
+SELECT count(*)
+FROM chat_room
+WHERE id=#{id}
+</select>
+
+<select id="chat_room_Check" parameterType="map" resultType="int">
+SELECT count(*)
+FROM chat_room
+WHERE chat_index = #{chat_index}
+AND
+id = #{id}
+</select>
+
+<delete id="delete_message" parameterType="int">
+delete from chat_message
+WHERE chat_index = #{chat_index}
+</delete>
+
+<select id="Canyou_Seethem" parameterType="map" resultType="int">
+select count(*)
+FROM chat_message
+where chat_index = #{chat_index}
+AND
+chat_date
+>= 
+TO_TIMESTAMP(#{finalDate},
+'YYYY-MM-DD hh24:mi:ss.ff')
+</select>
+
+<select id="Chat_content_read" parameterType="map" resultType="Chat_MessageDTO">
+select chat_message_index, chat_content,
+chat_index,
+chat_date,
+nickname
+FROM chat_message
+WHERE chat_index = #{chat_index}
+AND
+chat_date >=
+TO_TIMESTAMP(#{finalDate},
+'YYYY-MM-DD hh24:mi:ss.ff')
+
+</select>
+
+<select id="table_count" parameterType="int" resultType="int">
+SELECT count(*) FROM chat_message
+WHERE chat_index = #{chat_index}
+</select>
+
+<select id="getNickname" parameterType="String" resultType="String">
+SELECT mname FROM member
+where id = #{id}
+</select>
+
+<insert id="create_content" parameterType="Chat_MessageDTO">
+INSERT INTO chat_message(
+chat_message_index,chat_content,chat_index,chat_date,
+nickname
+)
+VALUES(
+(select nvl(max(chat_message_index),0)+1 FROM chat_message),
+#{chat_content},#{chat_index},
+systimestamp(2),
+#{nickname}
+)
+</insert>
+
+<select id="getRealTime" resultType="String">
+SELECT to_char(current_timestamp(2),'yyyy/mm/dd hh24:mi:ss.ff') 
+FROM dual
+</select>
+
+<select id="getTime" resultType="String">
+SELECT to_char(current_timestamp(2),'hh24:mi:ss') 
+FROM dual
+</select>
+
+<insert id="create" parameterType="Chat_RoomDTO">
+INSERT INTO chat_room(
+chat_index,chat_title,chat_nickname,id,cdate
+)
+VALUES(
+(select nvl(max(chat_index),0)+1 FROM chat_room),
+#{chat_title},#{chat_nickname},#{id},sysdate
+)
+</insert>
+
+<select id="read" parameterType="int" resultType="Chat_RoomDTO">
+SELECT chat_index,chat_title,chat_nickname,id,cdate
+FROM chat_room
+where chat_index = #{chat_index}
+</select>
+
+<!-- <update id="update" parameterType="Chat_RoomDTO"> -->
+<!-- UPDATE chat_room -->
+<!-- SET chat_title = #{chat_title}, -->
+<!--     chat_nickname = #{chat_nickname} -->
+<!-- WHERE chat_index = #{chat_index} -->
+<!-- </update> -->
+
+<delete id="delete" parameterType="int">
+DELETE FROM chat_room
+WHERE chat_index = #{chat_index}
+</delete>
+
+<select id="list" parameterType="map" resultType="Chat_RoomDTO">
+SELECT chat_index,chat_title,chat_nickname,id,cdate,
+r
+	FROM(
+	SELECT chat_index,chat_title,chat_nickname,id,cdate,
+	rownum r
+		FROM(
+		SELECT chat_index,chat_title,chat_nickname,id,cdate
+		FROM chat_room
+<where>
+		<choose>
+			<when test="col=='chat_index'">
+			chat_index like '%'||#{word}||'%'
+			</when>
+			<when test="col=='chat_title'">
+			chat_title like '%'||#{word}||'%'
+			</when>
+			<when test="col=='chat_nickname'">
+			chat_nickname like '%'||#{word}||'%'
+			</when>
+		</choose>
+</where>		
+ORDER BY cdate desc
+	)
+)
+<![CDATA[
+WHERE r>=#{sno} AND r<=#{eno}
+]]>
+</select>
+
+
+<select id="total" parameterType="int" resultType="int">
+SELECT count(*)
+FROM chat_room
+<where>
+		<choose>
+			<when test="col=='chat_index'">
+			chat_index like '%'||#{word}||'%'
+			</when>
+			<when test="col=='chat_title'">
+			chat_title like '%'||#{word}||'%'
+			</when>
+			<when test="col=='chat_nickname'">
+			chat_nickname like '%'||#{word}||'%'
+			</when>
+		</choose>
+</where>		
+</select>
+
+</mapper>
+

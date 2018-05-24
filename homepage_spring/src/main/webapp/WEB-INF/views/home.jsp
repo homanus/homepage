@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %> 
-<%@ include file="../ssi/ssi.jsp" %>
+<%@ include file="/ssi/ssi.jsp" %>
 <!DOCTYPE html>
 
 <html>
@@ -15,8 +15,16 @@ h1,h2,h3,h4,h5,h6 {font-family: "Oswald"}
 body {font-family: "Open Sans"}
 </style>
 <body class="w3-light-grey">
-<jsp:include page="/menu/top.jsp"></jsp:include>
 
+  <!-- Image header -->
+  <header class="w3-display-container w3-wide" id="home">
+    <img class="w3-image" src="${root}/w3images/jane.jpg" alt="Fashion Blog" width="1600" height="1060">
+    <div class="w3-display-left w3-padding-large">
+      <h1 class="w3-text-white">Han's</h1>
+      <h1 class="w3-jumbo w3-text-white w3-hide-small"><b>favorite thing</b></h1>
+<!--       <h6><button class="w3-button w3-white w3-padding-large w3-large w3-opacity w3-hover-opacity-off" onclick="document.getElementById('subscribe').style.display='block'">SUBSCRIBE</button></h6> -->
+    </div>
+  </header>
 
 <div class="w3-content" style="max-width:1600px">
 <!-- TOP END index 시작 -->
@@ -35,7 +43,7 @@ body {font-family: "Open Sans"}
         </div>
 
         <div class="w3-justify">
-          <img src="<%=root %>/w3images/girl_hat.jpg" alt="Girl Hat" style="width:100%" class="w3-padding-16">
+          <img src="${root}/w3images/girl_hat.jpg" alt="Girl Hat" style="width:100%" class="w3-padding-16">
           <p><strong>More Hats!</strong> I am crazy about hats these days. Some text about this blog entry. Fashion fashion and mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor
             magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sedtellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
           <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
@@ -45,7 +53,7 @@ body {font-family: "Open Sans"}
           <div class="w3-row w3-margin-bottom" id="demo1" style="display:none">
             <hr>
               <div class="w3-col l2 m3">
-                <img src="<%=root %>/w3images/avatar_smoke.jpg" style="width:90px;">
+                <img src="${root}/w3images/avatar_smoke.jpg" style="width:90px;">
               </div>
               <div class="w3-col l10 m9">
                 <h4>George <span class="w3-opacity w3-medium">May 3, 2015, 6:32 PM</span></h4>
@@ -64,7 +72,7 @@ body {font-family: "Open Sans"}
         </div>
 
         <div class="w3-justify">
-          <img src="<%=root %>/w3images/man_hat.jpg" alt="Men in Hats" style="width:100%" class="w3-padding-16">
+          <img src="${root}/w3images/man_hat.jpg" alt="Men in Hats" style="width:100%" class="w3-padding-16">
           <p><strong>Hats!</strong> The trend this summer is hats for men!</p>
           <p>Some text about this blog entry. Fashion fashion and mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies
             mi non congue ullam corper. Praesent tincidunt sedtellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
@@ -77,7 +85,7 @@ body {font-family: "Open Sans"}
             <div class="w3-row">
               <hr>
               <div class="w3-col l2 m3">
-                <img src="<%=root %>/w3images/girl_train.jpg" style="width:90px;">
+                <img src="${root}/w3images/girl_train.jpg" style="width:90px;">
               </div>
               <div class="w3-col l10 m9">
                 <h4>Amber <span class="w3-opacity w3-medium">April 26, 2015, 10:52 PM</span></h4>
@@ -86,7 +94,7 @@ body {font-family: "Open Sans"}
             </div>
             <div class="w3-row w3-margin-bottom">
               <div class="w3-col l2 m3">
-                <img src="<%=root %>/w3images/girl.jpg" style="width:90px;">
+                <img src="${root}/w3images/girl.jpg" style="width:90px;">
               </div>
               <div class="w3-col l10 m9">
                 <h4>Angie <span class="w3-opacity w3-medium">April 23, 2015, 9:12 PM</span></h4>
@@ -105,7 +113,7 @@ body {font-family: "Open Sans"}
         </div>
 
         <div class="w3-justify">
-          <img src="<%=root %>/w3images/runway.jpg" alt="Runway" style="width:100%" class="w3-padding-16">
+          <img src="${root}/w3images/runway.jpg" alt="Runway" style="width:100%" class="w3-padding-16">
           <p><strong>Dont miss!</strong> The runway in New York City this weekend is gonna be legendary!</p>
           <p>Some text about this blog entry. Fashion fashion and mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies
             mi non congue ullam corper. Praesent tincidunt sedtellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
@@ -118,7 +126,7 @@ body {font-family: "Open Sans"}
             <hr>
             <div class="w3-row w3-margin-bottom">
               <div class="w3-col l2 m3">
-                <img src="<%=root %>/w3images/girl_mountain.jpg" style="width:90px;">
+                <img src="${root}/w3images/girl_mountain.jpg" style="width:90px;">
               </div>
               <div class="w3-col l10 m9">
                 <h4>Jane <span class="w3-opacity w3-medium">April 10, 2015, 7:22 PM</span></h4>
@@ -127,7 +135,7 @@ body {font-family: "Open Sans"}
             </div>
             <div class="w3-row w3-margin-bottom">
               <div class="w3-col l2 m3">
-                <img src="<%=root %>/w3images/boy.jpg" style="width:90px;">
+                <img src="${root}/w3images/boy.jpg" style="width:90px;">
               </div>
               <div class="w3-col l10 m9">
                 <h4>John <span class="w3-opacity w3-medium">April 8, 2015, 10:32 PM</span></h4>
@@ -136,7 +144,7 @@ body {font-family: "Open Sans"}
             </div>
             <div class="w3-row w3-margin-bottom">
               <div class="w3-col l2 m3">
-                <img src="<%=root %>/w3images/girl_hood.jpg" style="width:90px;">
+                <img src="${root}/w3images/girl_hood.jpg" style="width:90px;">
               </div>
               <div class="w3-col l10 m9">
                 <h4>Anja <span class="w3-opacity w3-medium">April 7, 2015, 9:12 PM</span></h4>
@@ -154,7 +162,7 @@ body {font-family: "Open Sans"}
     <div class="w3-col l4">
       <!-- About Card -->
       <div class="w3-white w3-margin">
-        <img src="<%=root %>/w3images/avatar_girl2.jpg" alt="Jane" style="width:100%" class="w3-grayscale">
+        <img src="${root}/w3images/avatar_girl2.jpg" alt="Jane" style="width:100%" class="w3-grayscale">
         <div class="w3-container w3-black">
           <h4>My Name</h4>
           <p>Just me, myself and I, exploring the universe of uknownment. I have a heart of love and a interest of lorem ipsum and mauris neque quam blog. I want to share my world with you.</p>
@@ -169,25 +177,25 @@ body {font-family: "Open Sans"}
         </div>
         <ul class="w3-ul w3-hoverable w3-white">
           <li class="w3-padding-16">
-            <img src="<%=root %>/w3images/avatar_smoke.jpg" alt="Image" class="w3-left w3-margin-right" style="width:50px">
+            <img src="${root}/w3images/avatar_smoke.jpg" alt="Image" class="w3-left w3-margin-right" style="width:50px">
             <span class="w3-large">Denim</span>
             <br>
             <span>Sed mattis nunc</span>
           </li>
           <li class="w3-padding-16">
-            <img src="<%=root %>/w3images/bandmember.jpg" alt="Image" class="w3-left w3-margin-right" style="width:50px">
+            <img src="${root}/w3images/bandmember.jpg" alt="Image" class="w3-left w3-margin-right" style="width:50px">
             <span class="w3-large">Sweaters</span>
             <br>
             <span>Praes tinci sed</span>
           </li>
           <li class="w3-padding-16">
-            <img src="<%=root %>/w3images/workshop.jpg" alt="Image" class="w3-left w3-margin-right" style="width:50px">
+            <img src="${root}/w3images/workshop.jpg" alt="Image" class="w3-left w3-margin-right" style="width:50px">
             <span class="w3-large">Workshop</span>
             <br>
             <span>Ultricies congue</span>
           </li>
           <li class="w3-padding-16">
-            <img src="<%=root %>/w3images/avatar_smoke.jpg" alt="Image" class="w3-left w3-margin-right w3-sepia" style="width:50px">
+            <img src="${root}/w3images/avatar_smoke.jpg" alt="Image" class="w3-left w3-margin-right w3-sepia" style="width:50px">
             <span class="w3-large">Trends</span>
             <br>
             <span>Lorem ipsum dipsum</span>
@@ -233,12 +241,12 @@ body {font-family: "Open Sans"}
         </div>
         <div class="w3-row-padding w3-white">
           <div class="w3-col s6">
-            <p><img src="<%=root %>/w3images/jeans.jpg" alt="Jeans" style="width:100%"></p>
-            <p><img src="<%=root %>/w3images/team1.jpg" alt="Jeans" style="width:100%"></p>
+            <p><img src="${root}/w3images/jeans.jpg" alt="Jeans" style="width:100%"></p>
+            <p><img src="${root}/w3images/team1.jpg" alt="Jeans" style="width:100%"></p>
           </div>
           <div class="w3-col s6">
-            <p><img src="<%=root %>/w3images/avatar_hat.jpg" alt="Men in Hats" style="width:100%" class="w3-grayscale"></p>
-            <p><img src="<%=root %>/w3images/team4.jpg" alt="Jeans" style="width:100%"></p>
+            <p><img src="${root}/w3images/avatar_hat.jpg" alt="Men in Hats" style="width:100%" class="w3-grayscale"></p>
+            <p><img src="${root}/w3images/team4.jpg" alt="Jeans" style="width:100%"></p>
          </div>
         </div>
       </div>
@@ -299,7 +307,6 @@ body {font-family: "Open Sans"}
   <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
 </footer> -->
 
-<jsp:include page="/menu/bottom.jsp"></jsp:include>
 
 <!-- 	<script>
 		// Toggle between hiding and showing blog replies/comments

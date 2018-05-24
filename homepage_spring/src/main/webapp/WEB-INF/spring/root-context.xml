@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:aop="http://www.springframework.org/schema/aop"
     xmlns:tx="http://www.springframework.org/schema/tx"
     xmlns:context="http://www.springframework.org/schema/context"
-    
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -27,16 +25,16 @@
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
        <tx:attributes>
           <tx:method name="delete" rollback-for="Exception"/>
-          <!-- <tx:method name="reply" rollback-for="Exception"/> -->
+          <tx:method name="reply" rollback-for="Exception"/>
        </tx:attributes>
     </tx:advice>
  
     <aop:config>
-        <aop:pointcut id="transactionPointcut" expression="execution(* spring.sts.homepage.*.*Mgr.*(..))"/>
+        <aop:pointcut id="transactionPointcut" expression="execution(* spring.model.homepage.*.*Mgr.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="transactionPointcut" />
     </aop:config>
     
-    <context:component-scan base-package="www.deadlock.model.*" use-default-filters="false"> 
+    <context:component-scan base-package="spring.model.homepage.*" use-default-filters="false"> 
       <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
       <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
    	</context:component-scan>
@@ -78,9 +76,7 @@
             <list> 
                 <value>/WEB-INF/spring/main.xml</value> 
                 <value>/WEB-INF/spring/member.xml</value> 
-                <value>/WEB-INF/spring/bbs.xml</value> 
-                <value>/WEB-INF/spring/image.xml</value> 
-                <value>/WEB-INF/spring/guest.xml</value> 
+                <value>/WEB-INF/spring/bbs.xml</value>
             </list>
         </property> 
     </bean>  

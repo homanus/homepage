@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %> 
-<%@ include file="../ssi/ssi.jsp" %>
+<%@ include file="/ssi/ssi.jsp" %>
  
  <html>
 <title>W3.CSS Template</title>
