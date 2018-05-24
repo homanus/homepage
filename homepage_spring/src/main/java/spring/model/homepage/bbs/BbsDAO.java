@@ -77,7 +77,7 @@ public class BbsDAO implements IBbsDAO{
 	}
 
 	@Override
-	public String getFname(int bbsno) {
+	public String getFname(int bbsno) throws Exception {
 		String fname = null;
 		
 		fname = mybatis.selectOne("bbs.getFname",bbsno);
@@ -86,7 +86,7 @@ public class BbsDAO implements IBbsDAO{
 	}
 
 	@Override
-	public boolean checkRefnum(int bbsno) {
+	public boolean checkRefnum(int bbsno) throws Exception {
 		boolean flag = false;
 		
 		int cnt = mybatis.selectOne("bbs.checkRefnum", bbsno);
@@ -98,12 +98,12 @@ public class BbsDAO implements IBbsDAO{
 	}
 
 	@Override
-	public void upviewcnt(int bbsno) {
+	public void upviewcnt(int bbsno) throws Exception {
 		mybatis.update("bbs.upViewcnt",bbsno);
 	}
 
 	@Override
-	public boolean passcheck(Map map) {
+	public boolean passcheck(Map map) throws Exception {
 		boolean flag = false;
 		
 		int cnt = mybatis.selectOne("bbs.passcheck", map);
@@ -113,7 +113,7 @@ public class BbsDAO implements IBbsDAO{
 	}
 
 	@Override
-	public BbsDTO readReply(int bbsno) {
+	public BbsDTO readReply(int bbsno) throws Exception {
 		BbsDTO dto = null;
 		
 		dto = mybatis.selectOne("bbs.readReply", bbsno);
@@ -122,7 +122,7 @@ public class BbsDAO implements IBbsDAO{
 	}
 
 	@Override
-	public boolean createReply(BbsDTO dto) {
+	public boolean createReply(BbsDTO dto) throws Exception {
 		boolean flag = false;
 		
 		int cnt = mybatis.update("bbs.createReply",dto);
@@ -134,7 +134,7 @@ public class BbsDAO implements IBbsDAO{
 	}
 
 	@Override
-	public void upAnsnum(Map map) {
+	public void upAnsnum(Map map) throws Exception {
 		mybatis.update("bbs.upAnsnum",map);
 	}
 

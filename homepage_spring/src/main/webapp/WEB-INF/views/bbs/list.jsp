@@ -142,6 +142,7 @@ function fileDown(filename){
 			    	</c:otherwise>
 			    </c:choose>
 		  </TABLE>
+		  ${paging}
 	</div>
 </div>
 </body>

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ReplyDAO {
+public class ReplyDAO implements IReplyDAO{
 	
 	@Autowired
 	private SqlSessionTemplate mybatis;
@@ -18,8 +18,8 @@ public class ReplyDAO {
 		this.mybatis = mybatis;
 	}
 	
-	
-	public boolean create(ReplyDTO dto) {
+	@Override
+	public boolean create(Object dto) throws Exception {
 		boolean flag = false;
 		int cnt = mybatis.insert("reply.create",dto);
 		if(cnt >0) {
@@ -28,12 +28,14 @@ public class ReplyDAO {
 		return flag;
 	}
 	
-	public ReplyDTO read(int rnum) {
+	@Override
+	public Object read(Object rnum) throws Exception {
 		
 		return mybatis.selectOne("reply.read",rnum);
 	}
 	
-	public boolean update(ReplyDTO dto) {
+	@Override
+	public boolean update(Object dto) throws Exception {
 		boolean flag = false;
 		int cnt = mybatis.update("reply.update",dto);
 		if(cnt > 0 )flag = true;
@@ -41,7 +43,8 @@ public class ReplyDAO {
 		return flag;
 	}
 	
-	public boolean delete(int rnum) {
+	@Override
+	public boolean delete(Object rnum) throws Exception {
 		boolean flag = false;
 		
 		int cnt= mybatis.delete("reply.delete",rnum);
@@ -52,7 +55,8 @@ public class ReplyDAO {
 		return flag;
 	}
 	
-	public boolean bdelete(int bbsno) {
+	@Override
+	public boolean bdelete(int bbsno) throws Exception {
 		boolean flag = false;
 		
 		int cnt = mybatis.delete("reply.bdelete",bbsno);
@@ -63,14 +67,21 @@ public class ReplyDAO {
 		return flag;
 	}
 	
-	public List list(Map map) {
+	@Override
+	public List list(Map map) throws Exception {
 		
 		return mybatis.selectList("reply.list",map);
 	}
 	
-	public int total(int bbsno) {
+	public int total(int bbsno) throws Exception {
 		
 		return mybatis.selectOne("reply.total",bbsno);
+	}
+
+	@Override
+	public int total(Map map) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

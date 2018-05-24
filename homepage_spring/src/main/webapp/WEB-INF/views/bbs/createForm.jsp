@@ -20,7 +20,6 @@ h1,h2,h3,h4,h5,h6 {font-family: "Oswald"}
 
 body {font-family: "Open Sans"}
 </style> 
-<%-- <link href="<%=root%>/css/style.css" rel="Stylesheet" type="text/css"> --%>
 <script type="text/javascript">
 function incheck(f){
 	if(f.wname.value==""){
@@ -82,7 +81,7 @@ function incheck(f){
 		    </tr>
 		    <tr>
 		    	<th>비밀번호</th>
-		    	<td><input type="password" name="passwd" style="width: 100%;"></td>
+		    	<td><input type="password" name="passwd"></td>
 		    </tr>
 		    <tr>
 		    	<th>파일등록</th>
