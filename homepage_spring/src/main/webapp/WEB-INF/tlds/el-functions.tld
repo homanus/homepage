@@ -50,7 +50,7 @@
     		spring.sts.homepage.utility.Utility
     	</function-class>
     	<function-signature>
-    		int rcount(int, spring.model.blog.ReplyDAO)
+    		int rcount(int, spring.model.homepage.bbs.ReplyDAO)
     	</function-signature>
     </function>
      

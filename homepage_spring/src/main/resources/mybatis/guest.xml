@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="guest">
+	
+	<select id="idCheck" resultType="int" parameterType="Map">
+		select count(*) as cnt
+		from guest
+		where id = #{id} AND gno = #{gno}
+	</select>
+	
+	<select id="read" resultType="GuestDTO" parameterType="int">
+		select gno,fname,gname,content,gdate
+		from guest
+		where gno = #{gno}
+	</select>
+	
+	<select id="getFname" resultType="String" parameterType="int">
+		SELECT fname
+		FROM guest
+		WHERE gno=#{gno}
+	</select>
+	
+	<insert id="create" parameterType="GuestDTO">
+		INSERT INTO guest(
+		gno,fname,gname,content,gdate,id)
+		VALUES((SELECT NVL(MAX(gno),0)+1 as gno from guest),
+		#{fname},#{gname},#{content},sysdate,#{id})
+	</insert>
+	
+	<select id="list" resultType="GuestDTO" parameterType="Map">
+	SELECT gno,fname,gname,content,gdate,r
+		FROM(
+		SELECT gno,fname,gname,content,gdate, rownum r
+			FROM(
+			SELECT gno,fname,gname,content,gdate
+			FROM guest
+			<where>
+				<if test="col=='gname'">
+					gname like '%'||#{word}||'%'		
+				</if>
+				<if test="col=='content'">
+					content like '%'||#{word}||'%'
+				</if>
+			</where>
+			ORDER BY gdate DESC
+			)
+		)
+		<![CDATA[
+			WHERE r>=#{sno} and r<=#{eno}
+			]]>
+	</select>
+	
+	<update id="update" parameterType="GuestDTO">
+		UPDATE guest 
+		SET fname	=#{fname},
+		gname	=#{gname},
+		content=#{content}
+		WHERE   gno=#{gno}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE guest
+		WHERE gno=#{gno}
+	</delete>
+	
+	<select id="total" parameterType="Map" resultType="int">
+		 SELECT count(*) as cnt
+		 FROM guest
+		 <where>
+				<if test="col=='gname'">
+					gname like '%'||#{word}||'%'		
+				</if>
+				<if test="col=='content'">
+					content like '%'||#{word}||'%'
+				</if>
+		</where>
+	</select>
+
+</mapper>

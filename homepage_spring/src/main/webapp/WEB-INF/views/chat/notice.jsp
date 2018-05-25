@@ -7,6 +7,18 @@
 <title></title> 
 </head> 
 <body>
+create table image(
+ino number not null,
+title varchar(20) not null,
+content varchar(300) not null,
+passwd varchar(20) not null,
+mname varchar(20) not null,
+fname varchar(50) not null,
+wdate date not null,
+primary key(ino)
+);
+
+
 create table member(
 id          varchar(10)     not null,
 mname       varchar(20)     not null,

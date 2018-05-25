@@ -77,15 +77,15 @@ function fileDown(filename){
 					 	<option value="total">전체출력</option>
 					 </select>
 					 <input type="search" name="word" value="${word }"  required> <!-- 검색어 -->
-					 <button>검색</button>
-					 <button type="button" onclick="create()">등록</button>
+					 <button class="w3-button w3-white w3-border w3-small">검색</button>
+					 <button type="button" class="w3-button w3-black w3-small" onclick="create()">등록</button>
 				 </form>
 			</div>
 			
 		 <TABLE style="width:100%">
 			  <thead>
 			    <TR>
-			      <TH><div style="margin:10px">번호</div></TH>
+			      <TH><div style="margin:10px">No</div></TH>
 			      <Th><div style="margin:10px">작성자</div></Th>
 			      <Th><div style="margin:10px">제목</div></Th>
 			      <Th><div style="margin:10px">작성날짜</div></Th>
@@ -119,6 +119,11 @@ function fileDown(filename){
 								    	<a href="javascript:bread('${dto.bbsno}')">${dto.title}</a>
 								    		<c:if test="${util:compareDay(dto.wdate)}">
 												<img src="${root}/images/new.gif">							    		
+								    		</c:if>
+								    		<!-- 댓글 개수 -->
+								    		<c:set var="rcount" value="${util:rcount(dto.bbsno,rdao)}"/>
+								    		<c:if test="${rcount > 0}">
+								    			<span style="color:red">(${rcount })</span>
 								    		</c:if>
 								    	</div>
 							    	</td>

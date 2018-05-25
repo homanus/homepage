@@ -74,7 +74,6 @@ function incheck(){
 				<input type="hidden" name="word" value='${param.word}'>
 				<input type="hidden" name="nowPage" value='${param.nowPage}'>
 				<input type="hidden" name="oldfile" value='${dto.filename}'>
-					  
 				
 				  <TABLE class="table table-bordered">
 				    <TR>

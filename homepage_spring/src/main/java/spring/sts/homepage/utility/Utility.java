@@ -18,7 +18,7 @@ import spring.model.homepage.bbs.ReplyDAO;
 
 public class Utility {
 	
-	public static int rcount(int bbsno, ReplyDAO rdao) {
+	public static int rcount(int bbsno, ReplyDAO rdao) throws Exception {
 		
 		return rdao.total(bbsno);
 	}

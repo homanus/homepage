@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="image">
+	
+	<select id="getFname" resultType="String" parameterType="int">
+		 select fname 
+		 from image 
+		 where ino = #{ino}
+	</select>
+	
+	<insert id="create" parameterType="ImageDTO">
+		insert into image(
+		ino,title,fname,content,passwd,mname,wdate)
+		values(
+		(SELECT NVL(MAX(ino),0)+1 as ino from image),
+		#{title},#{fname},#{content},#{passwd},#{mname},sysdate)
+	</insert>
+	
+	<select id="list" parameterType="Map" resultType="ImageDTO">
+		select ino,title,fname,content,passwd,mname,
+		to_char(sysdate,'yyyy-mm-dd')wdate,
+		r
+		from(
+			select ino,title,fname,content,passwd,mname,wdate,rownum r
+			from(
+				select ino,title,fname,content,passwd,mname,wdate
+				from image 
+	
+		<where>
+			<if test="col=='title'">
+				title like '%'||#{word}||'%'
+			</if>
+			<if test="col=='mname'">
+				mname like '%'||#{word}||'%'
+			</if>
+		</where>
+				order by wdate desc
+				)
+			)
+		<![CDATA[
+		where r>=#{sno} and r<=#{eno}
+		]]>
+	</select>
+	
+	<update id="update" parameterType="ImageDTO">
+		update image
+		set fname=#{fname},
+		mname=#{mname},content=#{content},title=#{title}
+		where ino=#{ino}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM image
+		WHERE ino = #{ino}
+	</delete>
+	
+	<select id="read" parameterType="int" resultType="ImageDTO">
+		select ino,title,fname,content,passwd,mname,wdate
+		from image
+		where ino=#{ino}
+	</select>
+	
+	<select id="pwCheck" parameterType="Map" resultType="int">
+		select count(*) as cnt
+		from image
+		where ino=#{ino} and passwd=#{passwd}
+	</select>
+	
+	<select id="total" parameterType="Map" resultType="int">
+		select count(*) as cnt
+		from image
+		<where>
+			<if test="col=='title'">
+				title like '%'||#{word}||'%'
+			</if>
+			<if test="col=='mname'">
+				mname like '%'||#{word}||'%'
+			</if>
+		</where>
+	</select>
+		
+	<select id="imglist" parameterType="int" resultType="Map">
+		SELECT * FROM
+		(
+			select
+			lag(ino,2)     over (order by ino) pre_ino2, 
+			lag(ino,1)     over (order by ino ) pre_ino1,
+			ino,
+			lead(ino,1)    over (order by ino) nex_ino1, 
+			lead(ino,2)    over (order by ino) nex_ino2, 
+			lag(fname,2)  over (order by ino) pre_file2, 
+			lag(fname,1)  over (order by ino ) pre_file1,
+			fname,
+			lead(fname,1) over (order by ino) nex_file1,
+			lead(fname,2) over (order by ino) nex_file2 
+			from ( 
+				 SELECT ino, fname 
+				 FROM image 
+				 ORDER BY ino DESC
+				)
+		 )
+		 WHERE ino = #{ino}
+	</select>
+
+
+</mapper>

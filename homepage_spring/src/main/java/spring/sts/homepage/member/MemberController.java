@@ -215,6 +215,13 @@ public class MemberController {
 	public String loginProc(HttpServletRequest request, Model model, HttpServletResponse response) throws Exception {
 		String id = request.getParameter("id");
 		String passwd = request.getParameter("passwd");
+		
+		String bbsno = request.getParameter("bbsno");
+		String nPage = request.getParameter("nPage");
+		String nowPage = request.getParameter("nowPage");
+		String col = request.getParameter("col");
+		String word = request.getParameter("word");
+		String rflag = request.getParameter("rflag");
 
 		Map map = new HashMap();
 		map.put("id", id);
@@ -256,6 +263,15 @@ public class MemberController {
 		    }//else END
 		    
 		    url = "redirect:/";
+		    
+		    if(rflag != null && !rflag.equals("")) {
+		    	model.addAttribute("bbsno",bbsno);
+		    	model.addAttribute("nPage",nPage);
+		    	model.addAttribute("col",col);
+		    	model.addAttribute("word",word);
+		    	model.addAttribute("nowPage",nowPage);
+		    	url = "redirect:"+rflag;
+		    }//if rflag END
 		    
 		}//flag END
 		

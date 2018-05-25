@@ -29,7 +29,7 @@ body {font-family: "Open Sans"}
   <a href="${root}/bbs/list" class="w3-bar-item w3-button"><span class="glyphicon glyphicon-list"></span> 게시판</a>
   <a href="${root}/guest/list" class="w3-bar-item w3-button"><span class="glyphicon glyphicon-comment"></span> 회원 커뮤니티</a>
   <a href="${root}/image/list" class="w3-bar-item w3-button"><span class="glyphicon glyphicon-film"></span> 이미지 게시판</a>
-  <a href="${root}/mobile/m_Psychological_testing" class="w3-bar-item w3-button"><i class="fa fa-frown-o" style="font-size:24px"></i>m심리테스트</a>
+  <a href="${root}/etc/m_Psychological_testing" class="w3-bar-item w3-button"><i class="fa fa-frown-o" style="font-size:24px"></i>m심리테스트</a>
 <!--   <a href="#" class="w3-bar-item w3-button"><i class="fa fa-flickr"></i>bang</a>
   <a href="#" class="w3-bar-item w3-button"><i class="fa fa-twitter"></i>boom</a>
   <a href="#" class="w3-bar-item w3-button"><i class="fa fa-linkedin"></i>bing</a> -->

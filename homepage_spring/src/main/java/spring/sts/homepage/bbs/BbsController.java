@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import spring.model.homepage.bbs.BbsDTO;
 import spring.model.homepage.bbs.BbsMgr;
 import spring.model.homepage.bbs.IBbsDAO;
+import spring.model.homepage.bbs.IReplyDAO;
 import spring.model.homepage.bbs.ReplyDAO;
+import spring.model.homepage.bbs.ReplyDTO;
 import spring.sts.homepage.utility.Utility;
 
 @Controller
@@ -27,7 +29,84 @@ public class BbsController {
 	private BbsMgr mgr;
 	
 	@Autowired
-	private ReplyDAO rdao;
+	private IReplyDAO rdao;
+	
+	@RequestMapping("/bbs/passwdError")
+	public String passwdError() {
+		return "/bbs/passwdError";
+	}
+	
+	@RequestMapping("/bbs/rdelete")
+	public String rdelete(HttpServletRequest request, Model model) {
+		
+		int rnum = Integer.parseInt(request.getParameter("rnum"));
+		int bbsno = Integer.parseInt(request.getParameter("bbsno"));
+		int nowPage = Integer.parseInt(request.getParameter("nowPage"));
+		int nPage = Integer.parseInt(request.getParameter("nPage"));
+		String col = request.getParameter("col");
+		String word = request.getParameter("word");
+		
+		try {
+			rdao.delete(rnum);
+			model.addAttribute("rnum",rnum);
+			model.addAttribute("bbsno",bbsno);
+			model.addAttribute("nowPage",nowPage);
+			model.addAttribute("nPage",nPage);
+			model.addAttribute("col",col);
+			model.addAttribute("word",word);
+			
+			return "redirect:/bbs/read";
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			return "/bbs/error";
+		}
+		
+	}
+	
+	@RequestMapping("/bbs/rupdate")
+	public String rupdate(ReplyDTO dto, HttpServletRequest request, Model model) {
+		
+		try {
+			rdao.update(dto);
+			
+			model.addAttribute("nowPage", request.getParameter("nowPage"));
+			model.addAttribute("col", request.getParameter("col"));
+			model.addAttribute("word", request.getParameter("word"));
+			model.addAttribute("nPage", request.getParameter("nPage"));
+			model.addAttribute("bbsno", request.getParameter("bbsno"));
+			
+			return "redirect:/bbs/read";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "/bbs/error";
+		}
+		
+	}
+	
+	@RequestMapping("/bbs/rcreate")
+	public String rcreate(ReplyDTO dto, HttpServletRequest request,Model model) {
+		try {
+			rdao.create(dto);
+			
+			int nowPage = Integer.parseInt(request.getParameter("nowPage"));
+			String col = request.getParameter("col");
+			String word = request.getParameter("word");
+			
+			model.addAttribute("col",col);
+			model.addAttribute("word",word);
+			model.addAttribute("nowPage",nowPage);
+			model.addAttribute("bbsno",dto.getBbsno());
+			
+			return "redirect:/bbs/read";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "/bbs/error";
+		}
+	}
 	
 	@RequestMapping("/bbs/create")
 	public String createForm() {
@@ -257,8 +336,47 @@ public class BbsController {
 	}
 	
 	
+	@RequestMapping("/bbs/reply")
+	public String reply(HttpServletRequest request,int bbsno) {
+		
+		try {
+			BbsDTO dto = dao.readReply(bbsno);
+			request.setAttribute("dto", dto);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "/bbs/reply";
+	}
 	
-	
+	@RequestMapping("/bbs/replyProc")
+	public String replyProc(BbsDTO dto, Model model, HttpServletRequest request) {
+		
+		String basePath = request.getRealPath("/storage_bbs");
+		String filename = Utility.saveFileSpring30(dto.getFilenameMF(), basePath);
+		int filesize = (int)dto.getFilenameMF().getSize();
+		
+		try {
+			dto.setFilename(filename);
+			dto.setFilesize(filesize);
+			
+			mgr.reply(dto);
+			
+			model.addAttribute(request.getParameter("nowPage"));
+			model.addAttribute(request.getParameter("col"));
+			model.addAttribute(request.getParameter("word"));
+			
+			return "redirect:/bbs/list";
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			Utility.deleteFile(basePath, filename);
+			return "bbs/error";
+		}
+		
+	}
 	
 	
 	

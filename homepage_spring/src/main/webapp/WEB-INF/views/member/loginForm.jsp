@@ -20,6 +20,15 @@ function agreement(){
 <body>
 		
 <FORM class="signUp" name='frm' method='POST' action='${root }/member/loginProc'>
+		
+	  <input type="hidden" 	 name="rflag" 		value="${param.rflag }">
+	  <input type="hidden"   name="nPage"		value="${param.nPage }">
+	  <input type="hidden"	 name="col" 		value="${param.col }">
+	  <input type="hidden"	 name="word"	 	value="${param.word }">
+	  <input type="hidden"	 name="nowPage"		value="${param.nowPage }">
+	  <input type="hidden"	 name="bbsno" 		value="${param.bbsno }">
+	
+
 	<h1 class="signUpTitle">Sign in !</h1>
 	<c:choose>
       	<c:when test="${c_id == 'Y' }">

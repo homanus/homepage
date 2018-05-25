@@ -17,6 +17,12 @@
   width: 100%;
   padding: 10px;  /* 위 오른쪽 아래 왼쪽 */
 }
+table,th{
+width: 20%;
+}
+table,td{
+width: 80%;
+}
 h1,h2,h3,h4,h5,h6 {font-family: "Oswald"}
 body {font-family: "Open Sans"}
 
@@ -73,7 +79,6 @@ function input(f){
 			url += "&nPage=${nPage}";
 			url += "&rflag=../bbs/read";
 			location.href=url;
-			
 			return false;
 		
 		}else{
@@ -116,29 +121,24 @@ function rdelete(rnum){
 </head> 
 <body>
 <div class="w3-white">
-	<div class="container">
-		<h2><span class="glyphicon glyphicon-th-list"></span>게시글 내용</h2>
-		
+	<div class="container" style="width: 60%; margin: auto;">
+		<b>&nbsp;&nbsp;No.${dto.bbsno}</b>
 		  <TABLE class="table table-hover">
 		    <TR>
-		      <TH>번호</TH>
-		      <TD>${dto.bbsno }</TD>
+		      <TH>${dto.wname}</TH>
+		      <TH>
+		      	${dto.title}
+		      	<span style="float:right;">
+		      		(조회수:${dto.viewcnt})
+		      	</span>
+		      </TH>
 		    </TR>
 		    <TR>
-		      <TH>작성자</TH>
-		      <TD>${dto.wname }</TD>
-		    </TR>
-		    <TR>
-		      <TH>제목</TH>
-		      <TD>${dto.title }</TD>
-		    </TR>
-		    <TR>
-		      <TH>내용</TH>
-		      <TD>${dto.content }</TD>
-		    </TR>
-		    <TR>
-		      <TH>조회수</TH>
-		      <TD>${dto.viewcnt }</TD>
+		      <TD colspan="2">
+		      	<div style="width: 100%; height: 300px;">
+		      		${dto.content }
+		      	</div>
+		      </TD>
 		    </TR>
 		    <TR>
 		      <TH>등록날짜</TH>
@@ -166,17 +166,19 @@ function rdelete(rnum){
 		    <hr>
 		    
 		    <c:forEach var="rdto" items="${rlist }">
-		    	  <div class="rlist">
-					  ${rdto.id}<br>
-					  <p>${rdto.content}</p>
-					  ${rdto.regdate}
+		    	  <div class="rlist" style="width: 50%;">
+					  	${rdto.id} <span style="float: right">${rdto.regdate}</span><br>
+					  <p>
+					  	${rdto.content}
 					  <c:if test="${sessionScope.id==rdto.id}">
-						  <span style="float:right">
-						  <a href="javascript:rupdate('${rdto.rnum }','${rdto.content }')">수정</a>|
-						  <a href="javascript:rdelete('${rdto.rnum }')">삭제</a>
-						  </span>
+					  	<span style="float: right">
+					  		<a href="javascript:rupdate('${rdto.rnum }','${rdto.content }')">수정</a>|
+							<a href="javascript:rdelete('${rdto.rnum }')">삭제</a>
+					  	</span>
 					  </c:if>
+					  </p>
 				  </div>
+				  <hr>
 		    </c:forEach>
 		    
 		    ${paging }
@@ -187,8 +189,7 @@ function rdelete(rnum){
 			  	method="post"
 			  	onsubmit="return input(this)">
 				  	<textarea rows="3" cols="28" name="content"></textarea>
-				  	<input type="submit" name="rsubmit" value="등록"></input>
-					
+				  	<input class="w3-button w3-red" type="submit" name="rsubmit" value="등록"></input>
 					<input type="hidden" name="nowPage" value="${param.nowPage}">
 					<input type="hidden" name="col" value="${param.col}">
 					<input type="hidden" name="id" value="${sessionScope.id}">
