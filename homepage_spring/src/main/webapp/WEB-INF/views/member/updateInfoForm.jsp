@@ -89,104 +89,106 @@ function emailCheck2(f){
 </script>
 </head> 
 <body>
- <div class="container">
-	<DIV align="center">회원정보 수정</DIV>
+<div class="w3-white">
+	<div class="container">
+		<div class="w3-center">
+			<DIV align="center">회원정보 수정</DIV>
  
-<FORM 	name='frm'
-		method='POST'
-		action='updateInfoProc'
-		onsubmit="return incheck(this)"
-		enctype="multipart/form-data"
-		>
-	<input type="hidden" name="id" value="${id }">
-	<input type="hidden" name="col" value="${param.col }">
-	<input type="hidden" name="word" value="${param.word }"> 
-	<input type="hidden" name="nowPage" value="${param.nowPage }">
-	<input type="hidden" name="oldfile" value="${oldfile }">
-	<input type="hidden" name="dto" value="${dto}">
-
-  <TABLE class="table table-hover" style="width: 50%; margin: auto;">
-  <TR>
-      <TH>원본파일</TH>
-      <TD>
-      <img src="${root }/storage_member/${oldfile }">
-      원본파일명:${oldfile }
-      </TD>
-    </TR>
-    <tr>
-    	<th>변경파일</th>
-    	<td>
-    	<input type='file' name='filenameMF' accept=".jpg,.png,.gif" required="required">
-    	</td>
-    </tr>
-    <TR>
-      <TH>아이디</TH>
-      <TD>${dto.id }</TD>
-    </TR>
-    <tr>
-    	<th>닉네임</th>
-    	<td>
-    	<input type="text" name="mname" value="${dto.mname }">
-		</td>
-    </tr>
-    <tr>
-    	<th>연락처</th>
-    	<td><input type="text" name="tel" value="${dto.tel }"></td>
-    </tr>
-    <tr>
-    	<th>이름</th>
-    	<td>${dto.mname }</td>
-    </tr>
-    <tr>
-    	<th>이메일</th>
-    	<td><input type="text" name="email"
-    	value="${dto.email }" onkeydown="emailCheck2(this)">
-    	<button class="w3-button w3-blue w3-small" type="button" onclick="emailCheck(document.frm.email.value)">이메일 중복 확인</button></td>
-    </tr>
-    <tr>
-    	<th>우편번호</th>
-    	<td><input type='text' name='zipcode' size="7" id="sample6_postcode" placeholder="우편번호"
-    	value="${dto.zipcode }">
-    	<button class="w3-button w3-blue w3-small" type="button" onclick="sample6_execDaumPostcode()">주소검색</button></td>
-    </tr>
-    <tr>
-    	<th>주소</th>
-    	<td><input type="text" name="address1" size="40" value="${dto.address1 }"
-    	id="sample6_address" placeholder="주소"><br>
-    	<input type="text" name="address2" size="40" value="${dto.address2 }"
-    	id="sample6_address2" placeholder="상세주소">
-    	</td>
-    </tr>
-    <tr>
-    	<th>직업</th>
-    	<td>
-    	<select name="job">
-    		<option value="0">선택하세요</option>
-    		<option value="A01">회사원</option>
-    		<option value="A02">전산관련직</option>
-    		<option value="A03">연구전문직</option>
-    		<option value="A04">학생</option>
-    		<option value="A05">일반자영업</option>
-    		<option value="A06">공무원</option>
-    		<option value="A07">의료인</option>
-    		<option value="A08">법조인</option>
-    		<option value="A09">종교/언론/예술인</option>
-    		<option value="A10">기타</option>
-    	</select>
-    	<script type="text/javascript">
-    	document.frm.job.value="${dto.job}"
-    	</script>
-    	</td>
-    </tr>
-    
-  </TABLE>
-  <div align="center">
-    <input class="w3-button w3-red w3-small" type='submit' value='수정'>
-    <input class="w3-button w3-black w3-small" type='button' value='뒤로가기' onclick="history.back()">
-  </div>
-</FORM>
- 
- 
- </div>
+			<FORM 	name='frm'
+					method='POST'
+					action='updateInfoProc'
+					onsubmit="return incheck(this)"
+					enctype="multipart/form-data"
+					>
+				<input type="hidden" name="id" value="${id }">
+				<input type="hidden" name="col" value="${param.col }">
+				<input type="hidden" name="word" value="${param.word }"> 
+				<input type="hidden" name="nowPage" value="${param.nowPage }">
+				<input type="hidden" name="oldfile" value="${oldfile }">
+				<input type="hidden" name="dto" value="${dto}">
+			
+			  <TABLE class="table table-hover" style="width: 50%; margin: auto;">
+			  <TR>
+			      <TH>원본파일</TH>
+			      <TD>
+			      <img src="${root }/storage_member/${oldfile }">
+			      원본파일명:${oldfile }
+			      </TD>
+			    </TR>
+			    <tr>
+			    	<th>변경파일</th>
+			    	<td>
+			    	<input type='file' name='filenameMF' accept=".jpg,.png,.gif" required="required">
+			    	</td>
+			    </tr>
+			    <TR>
+			      <TH>아이디</TH>
+			      <TD>${dto.id }</TD>
+			    </TR>
+			    <tr>
+			    	<th>닉네임</th>
+			    	<td>
+			    	<input type="text" name="mname" value="${dto.mname }">
+					</td>
+			    </tr>
+			    <tr>
+			    	<th>연락처</th>
+			    	<td><input type="text" name="tel" value="${dto.tel }"></td>
+			    </tr>
+			    <tr>
+			    	<th>이름</th>
+			    	<td>${dto.mname }</td>
+			    </tr>
+			    <tr>
+			    	<th>이메일</th>
+			    	<td><input type="text" name="email"
+			    	value="${dto.email }" onkeydown="emailCheck2(this)">
+			    	<button class="w3-button w3-blue w3-small" type="button" onclick="emailCheck(document.frm.email.value)">이메일 중복 확인</button></td>
+			    </tr>
+			    <tr>
+			    	<th>우편번호</th>
+			    	<td><input type='text' name='zipcode' size="7" id="sample6_postcode" placeholder="우편번호"
+			    	value="${dto.zipcode }">
+			    	<button class="w3-button w3-blue w3-small" type="button" onclick="sample6_execDaumPostcode()">주소검색</button></td>
+			    </tr>
+			    <tr>
+			    	<th>주소</th>
+			    	<td><input type="text" name="address1" size="40" value="${dto.address1 }"
+			    	id="sample6_address" placeholder="주소"><br>
+			    	<input type="text" name="address2" size="40" value="${dto.address2 }"
+			    	id="sample6_address2" placeholder="상세주소">
+			    	</td>
+			    </tr>
+			    <tr>
+			    	<th>직업</th>
+			    	<td>
+			    	<select name="job">
+			    		<option value="0">선택하세요</option>
+			    		<option value="A01">회사원</option>
+			    		<option value="A02">전산관련직</option>
+			    		<option value="A03">연구전문직</option>
+			    		<option value="A04">학생</option>
+			    		<option value="A05">일반자영업</option>
+			    		<option value="A06">공무원</option>
+			    		<option value="A07">의료인</option>
+			    		<option value="A08">법조인</option>
+			    		<option value="A09">종교/언론/예술인</option>
+			    		<option value="A10">기타</option>
+			    	</select>
+			    	<script type="text/javascript">
+			    	document.frm.job.value="${dto.job}"
+			    	</script>
+			    	</td>
+			    </tr>
+			    
+			  </TABLE>
+			  <div align="center">
+			    <input class="w3-button w3-red w3-small" type='submit' value='수정'>
+			    <input class="w3-button w3-black w3-small" type='button' value='뒤로가기' onclick="history.back()">
+			  </div>
+			</FORM>
+		</div>
+	</div>
+</div>
 </body>
 </html> 

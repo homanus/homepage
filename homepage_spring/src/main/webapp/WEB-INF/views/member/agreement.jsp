@@ -30,8 +30,9 @@
 <body leftmargin="0" topmargin="0">
 
 <!-- *********************************************** -->
-<div class="container">
-
+<div class="w3-white">
+	<div class="container">
+		<div class="w3-center">
 <br/> 
 <!-- onsubmit 이벤트는 form이 submit이 될 때 발생함. 
     실행된 함수가 false를 리턴하면 submit을 하지 않음. 
@@ -237,6 +238,8 @@
   <button type='button' onclick='history.back()' class="w3-button w3-black">취소</button> 
 </div> 
 </form> 
+</div>
+</div>
  </div> 
  <div style="margin-bottom: 10px;"></div>
 </body>

@@ -13,14 +13,18 @@
 <title></title> 
 </head>
 <body>
-<div class="container">
-	<div class="signUp">
-		<h1 class="signUpTitle">로그인 확인</h1>
-			<h4>아이디/패스워드를 잘못 입력하셨거나<br>
-			 	아이디가 존재하지 않습니다.
-			</h4>
-	    <input class="signUpButton" type='button' value='다시시도' onclick="history.back()">
-	    <input class="signUpButton" type='button' value='회원가입' onclick="location.href='./agreement'">
+<div class="w3-white">
+	<div class="container">
+		<div class="w3-center">
+			<div class="signUp">
+				<h1 class="signUpTitle">로그인 확인</h1>
+					<h4>아이디/패스워드를 잘못 입력하셨거나<br>
+					 	아이디가 존재하지 않습니다.
+					</h4>
+			    <input class="signUpButton" type='button' value='다시시도' onclick="history.back()">
+			    <input class="signUpButton" type='button' value='회원가입' onclick="location.href='./agreement'">
+			</div>
+		</div>
 	</div>
 </div>
 </body>

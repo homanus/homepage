@@ -14,20 +14,24 @@
 </head> 
 <body>
  
-<div class="container">
-	<div class="signUp">
-		<FORM name='frm' method='POST' action='deleteProc'>
-			<h1 class="signUpTitle">회원 탈퇴</h1>
-			<input class="signUpInput" type="hidden" name="id" value="${id }">
-			<input class="signUpInput" type="hidden" name="fname" value="${fname }">
-						<h4>
-						정말 탈퇴 하시겠습니까?<br>
-						회원 탈퇴시 복구하실 수 없습니다.
-						</h4>
-			<input class="signUpButton" type='submit' value='회원탈퇴' onclick="mdelete()">
-			<input class="signUpButton" type='button' value='취소' onclick='history.back()'>
-		
-		</FORM>
+<div class="w3-white">
+	<div class="container">
+		<div class="w3-center">
+			<div class="signUp">
+				<FORM name='frm' method='POST' action='deleteProc'>
+					<h1 class="signUpTitle">회원 탈퇴</h1>
+					<input class="signUpInput" type="hidden" name="id" value="${id }">
+					<input class="signUpInput" type="hidden" name="fname" value="${fname }">
+								<h4>
+								정말 탈퇴 하시겠습니까?<br>
+								회원 탈퇴시 복구하실 수 없습니다.
+								</h4>
+					<input class="signUpButton" type='submit' value='회원탈퇴' onclick="mdelete()">
+					<input class="signUpButton" type='button' value='취소' onclick='history.back()'>
+				
+				</FORM>
+			</div>
+		</div>
 	</div>
 </div>
  

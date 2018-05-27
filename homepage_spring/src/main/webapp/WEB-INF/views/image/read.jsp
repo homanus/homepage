@@ -15,6 +15,7 @@ TABLE{
   border-spacing:0px;
   border-style:none;
   padding:0px;
+  width: 50%;
 }
 .search{
 	width:80%;
@@ -91,8 +92,8 @@ function fileDown(fname){
 	      <a href="javascript:fileDown('${dto.fname }')"><img src="${root}/storage_image/${dto.fname }" width="100%" height="800px;"></a>
 	    </tr>
 	    <tr>
-	    	<th>${dto.mname }</th>
 	    	<th>${dto.title }</th>
+	    	<th style="float: right;">${dto.mname }</th>
 	    </tr>
 	    <tr>
 	    	<td colspan="2">

@@ -79,7 +79,6 @@
                 <value>/WEB-INF/spring/bbs.xml</value>
                 <value>/WEB-INF/spring/image.xml</value>
                 <value>/WEB-INF/spring/guest.xml</value>
-                <value>/WEB-INF/spring/etc.xml</value>
             </list>
         </property> 
     </bean>  

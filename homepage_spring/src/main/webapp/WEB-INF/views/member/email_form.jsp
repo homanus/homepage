@@ -13,14 +13,16 @@
 <title></title> 
 </head> 
 <body>
-<div class="container">
-
-<FORM name='frm' method='POST' action='email_proc' class="signUp1">
-	<h1 class="signUpTitle">이메일 중복확인</h1>
-	<input class="signUpInput" type="email" name="email" size="20" required placeholder="사용하실 이메일을 입력하세요.">
-	<button class="signUpButton">중복확인</button>
-  
-</FORM>
+<div class="w3-white">
+	<div class="container">
+		<div class="w3-center">
+			<FORM name='frm' method='POST' action='email_proc' class="signUp1">
+				<h1 class="signUpTitle">이메일 중복확인</h1>
+				<input class="signUpInput" type="email" name="email" size="20" required placeholder="사용하실 이메일을 입력하세요.">
+				<button class="signUpButton">중복확인</button>
+			</FORM>
+		</div>
+	</div>		
 </div>
  
 </body>

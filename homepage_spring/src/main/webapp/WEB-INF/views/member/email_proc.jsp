@@ -83,45 +83,46 @@ function display_choose(){
 </script>
 </head>
 <body>
-<div class="container">
-	<div class="signUp">
-		<h1 class="signUpTitle">이메일 확인</h1>
-		<input class="signUpInput" value="입력된 Email:${param.email }" readonly="readonly">
-		<c:choose>
-			<c:when test="${flag == true }">
-			<script>alert("중복되어서 사용하실 수 없습니다.")
-					history.back()</script>
-			</c:when>
-			<c:otherwise>
-		<div id="pass" align="center">
-				<input class="signUpInput" value="중복아님, 사용 가능합니다." readonly="readonly">
-				<button class="signUpButton" id='email_btn' onclick='emailCheck()'>이메일 인증코드 발송</button>
+<div class="w3-white">
+	<div class="container">
+		<div class="w3-center">
+			<div class="signUp">
+				<h1 class="signUpTitle">이메일 확인</h1>
+				<input class="signUpInput" value="입력된 Email:${param.email }" readonly="readonly">
+				<c:choose>
+					<c:when test="${flag == true }">
+					<script>alert("중복되어서 사용하실 수 없습니다.")
+							history.back()</script>
+					</c:when>
+					<c:otherwise>
+				<div id="pass" align="center">
+						<input class="signUpInput" value="중복아님, 사용 가능합니다." readonly="readonly">
+						<button class="signUpButton" id='email_btn' onclick='emailCheck()'>이메일 인증코드 발송</button>
+				</div>
+					</c:otherwise>
+				</c:choose>
+		 
+				<div id="se" align="center" style="display: none;">
+					<form id="checkEmail_form" action="sendMail" method="post">
+					
+						<input type="hidden" name="from" value="deadlock7683@gmail.com">
+						<input type="hidden" name="to" value="${param.email }">
+						<input type="hidden" name="subject" value="메일 검증 코드">
+						<input type="hidden" id="mail_code" name="content" value="코드 인증창에 아래의 코드를 입력해주세요.<br>${code}">
+						
+					<input class="signUpInput" type="text" id="ch_mail_code" placeholder="코드를 입력하세요">
+					<button class="signUpButton" type="button" id="check_try" onclick="check_m()">이메일 인증</button>
+					</form>
+				</div>
+		
+		
+				<div id="check_success" align="center" style="display: none;">
+					<input class="signUpInput" value="이메일 인증이 완료되었습니다." readonly="readonly">
+					<button class="signUpButton" type="button" onclick="use()">사용</button>
+				</div>
+			</div>
 		</div>
-			</c:otherwise>
-		</c:choose>
- 
- 
- 
- 
-		<div id="se" align="center" style="display: none;">
-			<form id="checkEmail_form" action="sendMail" method="post">
-			
-				<input type="hidden" name="from" value="deadlock7683@gmail.com">
-				<input type="hidden" name="to" value="${param.email }">
-				<input type="hidden" name="subject" value="메일 검증 코드">
-				<input type="hidden" id="mail_code" name="content" value="코드 인증창에 아래의 코드를 입력해주세요.<br>${code}">
-				
-			<input class="signUpInput" type="text" id="ch_mail_code" placeholder="코드를 입력하세요">
-			<button class="signUpButton" type="button" id="check_try" onclick="check_m()">이메일 인증</button>
-			</form>
-		</div>
-
-
-		<div id="check_success" align="center" style="display: none;">
-			<input class="signUpInput" value="이메일 인증이 완료되었습니다." readonly="readonly">
-			<button class="signUpButton" type="button" onclick="use()">사용</button>
-		</div>
-	</div>
+	</div>		
 </div>
 </body>
 </html> 

@@ -70,28 +70,32 @@ $(function(){
 </script>
 </head>
 <body>
-<div class="container">
-<FORM id="id_form_data" class="signUp" name='frm' method='POST'>
-<h1 class="signUpTitle">아이디 중복 확인</h1>
-<div align="center" id="id_form">
-      <label>10자 이내의 알파벳, 언더스코어(_), 숫자만 입력 가능합니다.<br>
-      <input type="text" name="id" id="id"
-      class="signUpInput" size="20" data-rule-required="true" maxlength="10"
-      placeholder="사용하실 아이디를 입력하세요.">
-      </label>
-<br>
-    <button class="signUpButton" type="button" onclick="id_dup_check()">중복확인</button>
-<!--   <button class="signUpButton" type="button" onclick="window.close()">취소</button> -->
-</div>
-
-<div id="id_proc" align="center" style="display: none">
- 		<h4 id="select_id"></h4>
- 		<br>
-		<input class="signUpButton" type='button' value='사용' onclick='use()'>
-<!--     	<input class="signUpButton" type='button' value='다시시도' onclick="history.back()"> -->
-</div>
- 
-</FORM>
+<div class="w3-white">
+	<div class="container">
+		<div class="w3-center">
+			<FORM id="id_form_data" class="signUp" name='frm' method='POST'>
+			<h1 class="signUpTitle">아이디 중복 확인</h1>
+			<div align="center" id="id_form">
+			      <label>10자 이내의 알파벳, 언더스코어(_), 숫자만 입력 가능합니다.<br>
+			      <input type="text" name="id" id="id"
+			      class="signUpInput" size="20" data-rule-required="true" maxlength="10"
+			      placeholder="사용하실 아이디를 입력하세요.">
+			      </label>
+			<br>
+			    <button class="signUpButton" type="button" onclick="id_dup_check()">중복확인</button>
+			<!--   <button class="signUpButton" type="button" onclick="window.close()">취소</button> -->
+			</div>
+			
+			<div id="id_proc" align="center" style="display: none">
+			 		<h4 id="select_id"></h4>
+			 		<br>
+					<input class="signUpButton" type='button' value='사용' onclick='use()'>
+			<!--     	<input class="signUpButton" type='button' value='다시시도' onclick="history.back()"> -->
+			</div>
+			 
+			</FORM>
+		</div>
+	</div>
 </div>
 </body>
 </html> 

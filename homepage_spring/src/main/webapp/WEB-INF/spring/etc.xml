@@ -2,9 +2,3 @@
 <!DOCTYPE  tiles-definitions PUBLIC 
     "-//Aapche Software Foundation//DTD Tiles Configuration 2.0//EN" 
     "http://tiles.apache.org/dtds/tiles-config_2_0.dtd"> 
-<tiles-definitions>
-	<definition name="/etc/m_Psychological_testing" extends="main"> 
-        <put-attribute name="title" value="ETC-심리테스트" ></put-attribute> 
-        <put-attribute name="body" value="/WEB-INF/views/etc/m_Psychological_testing.jsp" /> 
-    </definition>   
-</tiles-definitions>

@@ -53,34 +53,38 @@ function inCheck(){
 </script>
 </head> 
 <body>
-<div class="container">
-<div align="center" class="signUp">
-		<h1 class="signUpTitle">비밀번호 변경</h1>
-<c:choose>
-	<c:when test="${flag == false }">
-		비밀번호가 틀렸습니다.
-		<br><input class="signUpInput" type='button' value='다시시도' onclick='history.back()'>
-	</c:when>
-	<c:otherwise>
-<FORM 	name='frm'
-		method='POST'
-		action='updatePasswdProc'
-		>
-		<input type="hidden" name="id" value="${param.id }">
-		<input type="hidden" name="col" value="${param.col }">
-		<input type="hidden" name="word" value="${param.word }">
-		<input type="hidden" name="nowPage" value="${param.nowPage }">
-		
-		<input class="signUpInput" value="${param.id }">
-    	<input class="signUpInput" placeholder="변경할 비밀번호" type="password" name="passwd" value="">
-    	<input class="signUpInput" placeholder="비밀번호 확인" type="password" name="repasswd" value="">
-  
-    <input class="signUpButton" type='button' value='비밀번호 수정' onclick="inCheck()">
-    <input class="signUpButton_black" type='button' value='내 정보로' onclick="mread()">
-</FORM>
-	</c:otherwise>
-</c:choose>
+<div class="w3-white">
+	<div class="container">
+		<div class="w3-center">
+			<div align="center" class="signUp">
+					<h1 class="signUpTitle">비밀번호 변경</h1>
+				<c:choose>
+					<c:when test="${flag == false }">
+						비밀번호가 틀렸습니다.
+						<br><input class="signUpInput" type='button' value='다시시도' onclick='history.back()'>
+					</c:when>
+					<c:otherwise>
+				<FORM 	name='frm'
+						method='POST'
+						action='updatePasswdProc'
+						>
+						<input type="hidden" name="id" value="${param.id }">
+						<input type="hidden" name="col" value="${param.col }">
+						<input type="hidden" name="word" value="${param.word }">
+						<input type="hidden" name="nowPage" value="${param.nowPage }">
+						
+						<input class="signUpInput" value="${param.id }">
+				    	<input class="signUpInput" placeholder="변경할 비밀번호" type="password" name="passwd" value="">
+				    	<input class="signUpInput" placeholder="비밀번호 확인" type="password" name="repasswd" value="">
+				  
+				    <input class="signUpButton" type='button' value='비밀번호 수정' onclick="inCheck()">
+				    <input class="signUpButton_black" type='button' value='내 정보로' onclick="mread()">
+				</FORM>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
+	</div>
 </div>
- </div>
 </body>
 </html> 

@@ -142,51 +142,55 @@ $(function(){
 </script>
 </head> 
 <body>
-<div class="container">
- <br>
-	<FORM 	name='frm'
-			method='POST'
-			action='createProc'
-			enctype="multipart/form-data"
-			onsubmit="return inputCheck(this)"
-			class="signUp1">
-			
-			<h1 class="signUpTitle">Sign up</h1>
-	    	사진은 JPG, PNG, GIF 파일만 올려 주세요(본인사진)
-			<input class="signUpInput" type='file' name='filenameMF' accept=".jpg,.png,.gif">
-			<button class="signUpButton" style="font-size: 15px" type="button" onclick="idCheck(document.frm.id.value)">중복확인</button>
-			<input class="signUpInput" type='text' name="id" size='20' placeholder="중복확인 버튼을 눌러주세요" value="" readonly>
-			<input class="signUpInput" type='password' name='passwd' size='20' placeholder="비밀번호(*필수)">
-			<input class="signUpInput" type='password' name='repasswd' size='20' placeholder="비밀번호 확인(*필수)">
-			<input class="signUpInput" type='text' name='mname' size='20' placeholder="이름(*필수)">
-			<button class="signUpButton" style="font-size: 15px" type="button" onclick="emailCheck()">이메일 중복확인</button>
-			<input class="signUpInput" type='email' name='email' size="20" placeholder="중복확인 버튼을 눌러주세요" readonly>
-					<select name="job" class="signUpInput">
-			    		<option value="0" selected>선택하세요</option>
-			    		<option value="A01">회사원</option>
-			    		<option value="A02">전산관련직</option>
-			    		<option value="A03">연구전문직</option>
-			    		<option value="A04">학생</option>
-			    		<option value="A05">일반자영업</option>
-			    		<option value="A06">공무원</option>
-			    		<option value="A07">의료인</option>
-			    		<option value="A08">법조인</option>
-			    		<option value="A09">종교/언론/예술인</option>
-			    		<option value="A10">기타</option>
-			    	</select>
-			<button class="signUpButton_rblack" id="Detail_show" type="button">상세정보 입력</button>
-			<button class="signUpButton_rblack" id="Detail_hide" type="button" style="display: none">상세정보 접기</button>
-			<br>
-		<div id="Detail" style="display: none">
-			<input class="signUpInput" type='text' name='tel' placeholder="전화번호">
-			<button class="signUpButton" style="font-size: 15px" style="font-size: 18px" type="button" onclick="sample6_execDaumPostcode()">주소검색</button>
-			<input class="signUpInput" type='text' name='zipcode' size="7" id="sample6_postcode" placeholder="주소검색 버튼을 누르세요" readonly="readonly">
-			<input class="signUpInput" type='text' name='address1' size="40" id="sample6_address" placeholder="주소">
-	    	<input class="signUpInput" type='text' name='address2' size="40" id="sample6_address2" placeholder="상세주소">
-		</div>
-	    	<div id="grecaptcha" class="g-recaptcha" data-sitekey="6LdqpVgUAAAAAD4GL5mVsRPaFNFtrKyq42a1gD-X"></div>
-			 <button class="signUpButton">회원가입</button>
-	</FORM>
+<div class="w3-white">
+	<div class="container">
+		<div class="w3-center">
+			 <br>
+				<FORM 	name='frm'
+						method='POST'
+						action='createProc'
+						enctype="multipart/form-data"
+						onsubmit="return inputCheck(this)"
+						class="signUp1">
+						
+						<h1 class="signUpTitle">Sign up</h1>
+				    	사진은 JPG, PNG, GIF 파일만 올려 주세요(본인사진)
+						<input class="signUpInput" type='file' name='filenameMF' accept=".jpg,.png,.gif">
+						<button class="signUpButton" style="font-size: 15px" type="button" onclick="idCheck(document.frm.id.value)">중복확인</button>
+						<input class="signUpInput" type='text' name="id" size='20' placeholder="중복확인 버튼을 눌러주세요" value="" readonly>
+						<input class="signUpInput" type='password' name='passwd' size='20' placeholder="비밀번호(*필수)">
+						<input class="signUpInput" type='password' name='repasswd' size='20' placeholder="비밀번호 확인(*필수)">
+						<input class="signUpInput" type='text' name='mname' size='20' placeholder="이름(*필수)">
+						<button class="signUpButton" style="font-size: 15px" type="button" onclick="emailCheck()">이메일 중복확인</button>
+						<input class="signUpInput" type='email' name='email' size="20" placeholder="중복확인 버튼을 눌러주세요" readonly>
+								<select name="job" class="signUpInput">
+						    		<option value="0" selected>선택하세요</option>
+						    		<option value="A01">회사원</option>
+						    		<option value="A02">전산관련직</option>
+						    		<option value="A03">연구전문직</option>
+						    		<option value="A04">학생</option>
+						    		<option value="A05">일반자영업</option>
+						    		<option value="A06">공무원</option>
+						    		<option value="A07">의료인</option>
+						    		<option value="A08">법조인</option>
+						    		<option value="A09">종교/언론/예술인</option>
+						    		<option value="A10">기타</option>
+						    	</select>
+						<button class="signUpButton_rblack" id="Detail_show" type="button">상세정보 입력</button>
+						<button class="signUpButton_rblack" id="Detail_hide" type="button" style="display: none">상세정보 접기</button>
+						<br>
+					<div id="Detail" style="display: none">
+						<input class="signUpInput" type='text' name='tel' placeholder="전화번호">
+						<button class="signUpButton" style="font-size: 15px" style="font-size: 18px" type="button" onclick="sample6_execDaumPostcode()">주소검색</button>
+						<input class="signUpInput" type='text' name='zipcode' size="7" id="sample6_postcode" placeholder="주소검색 버튼을 누르세요" readonly="readonly">
+						<input class="signUpInput" type='text' name='address1' size="40" id="sample6_address" placeholder="주소">
+				    	<input class="signUpInput" type='text' name='address2' size="40" id="sample6_address2" placeholder="상세주소">
+					</div>
+				    	<div id="grecaptcha" class="g-recaptcha" data-sitekey="6LdqpVgUAAAAAD4GL5mVsRPaFNFtrKyq42a1gD-X"></div>
+						 <button class="signUpButton">회원가입</button>
+				</FORM>
+		  </div>
+	</div>
 </div>
 </body>
 </html> 

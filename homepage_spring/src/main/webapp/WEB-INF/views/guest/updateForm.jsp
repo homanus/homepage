@@ -39,7 +39,7 @@ body {font-family: "Open Sans"}
 				  <TABLE class="table table-bordered">
 				  	<tr>
 				  		<th>예전 사진</th>
-				  		<td><img src="./storage_guest/${oldfile }" width="50%" height="20%"><br>
+				  		<td><img src="${root}/storage_guest/${oldfile }" width="50%" height="50%"><br>
 				    		  원본파일명:${oldfile }
 				      </td>
 				  	

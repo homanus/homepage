@@ -13,19 +13,23 @@
 </head> 
 <body>
 
-<div align="center" class="container">
-	<div class="signUp">
-		<h1 class="signUpTitle">비밀번호 확인</h1>
-		<FORM name='frm' method='POST' action='updatePasswdForm'>
-				<input type="hidden" name="id" value="${param.id }">
-				<input type="hidden" name="col" value="${param.col }">
-				<input type="hidden" name="word" value="${param.word }">
-				<input type="hidden" name="nowPage" value="${param.nowPage }">
-				<input class="signUpInput" type="password"
-				name="passwd1" value="" required
-				placeholder="비밀번호를 입력하세요">
-		 <input class="signUpButton" type='submit' value='비밀번호 확인'>
-		</FORM>
+<div class="w3-white">
+	<div class="container">
+		<div class="w3-center">
+			<div class="signUp">
+				<h1 class="signUpTitle">비밀번호 확인</h1>
+				<FORM name='frm' method='POST' action='updatePasswdForm'>
+						<input type="hidden" name="id" value="${param.id }">
+						<input type="hidden" name="col" value="${param.col }">
+						<input type="hidden" name="word" value="${param.word }">
+						<input type="hidden" name="nowPage" value="${param.nowPage }">
+						<input class="signUpInput" type="password"
+						name="passwd1" value="" required
+						placeholder="비밀번호를 입력하세요">
+				 <input class="signUpButton" type='submit' value='비밀번호 확인'>
+				</FORM>
+			</div>
+		</div>
 	</div>
 </div>
 
