@@ -117,16 +117,16 @@
 </head>
 <body>
 	<div data-role="page" id="page1" data-position="fixed">
-	<div data-role="header">
-	<h1>심리테스트</h1>
-	</div>
-	<div data-role="content">
-	 <div align="center" style="margin-top: 100px;"><h1>여러분의 심리를 알아보세요!</h1></div>
-	 <a href="#test1" data-role="button">심리테스트1</a>
-	 <a href="#test2" data-role="button" data-transition="slide">심리테스트2</a>
-	 <a href="#test3" data-role="button">심리테스트3</a>
-	 <a href="javascript:gohome()" data-role="button">홈으로</a>
-	 </div>
+		<div data-role="header">
+			<h1>심리테스트</h1>
+		</div>
+		<div data-role="content">
+			 <div align="center" style="margin-top: 100px;"><h1>여러분의 심리를 알아보세요!</h1></div>
+			 <a href="#test1" data-role="button">심리테스트1</a>
+			 <a href="#test2" data-role="button" data-transition="slide">심리테스트2</a>
+			 <a href="#test3" data-role="button">심리테스트3</a>
+			 <a href="javascript:gohome()" data-role="button">홈으로</a>
+		 </div>
 	 </div>
 	 
 	 
@@ -144,8 +144,6 @@
 	<a href="#big-2-5" data-role="button" id="value_big">크다</a>
 	<a href="#big-2-5" data-role="button" id="value_small">작다</a>
 	<a href="${root}/etc/m_Psychological_testing" data-role="button">심리테스트 메인으로</a>
-	<!-- 아직 처리 안 했음. -->
-	
 	</div>
 	
 	
@@ -160,9 +158,7 @@
 	</div>
 	<a href="#big-3-5" data-role="button" id="value_fly">날아다닌다</a>
 	<a href="#big-3-5" data-role="button" id="value_landing">사막위에 착륙한 상태</a>
-	<!-- 아직 처리 안 했음. -->
 	<a href="#big-3-5" data-role="button" id="value_Be_buried">모래에 파뭍혀있는 상태</a>
-	<!-- 아직 처리 안 했음. -->
 	<a href="${root}/etc/m_Psychological_testing" data-role="button">심리테스트 메인으로</a>
 	</div>
 	
@@ -178,7 +174,6 @@
 	</div>
 	<a href="#big-4-5" data-role="button" id="value_biger">크다</a>
 	<a href="#big-4-5" data-role="button" id="value_smaller">작다</a>
-	<!-- 아직 처리 안 했음 -->
 	<a href="${root}/etc/m_Psychological_testing" data-role="button">심리테스트 메인으로</a>
 	</div>
 	
@@ -194,7 +189,6 @@
 	</div>
 	<a href="#big-5-5" data-role="button" id="value_connect">UFO와 연결되어 있다.</a>
 	<a href="#big-5-5" data-role="button" id="value_far">UFO와 떨어져 있다.</a>
-	<!-- 아직 처리 안 했음 -->
 	<a href="${root}/etc/m_Psychological_testing" data-role="button">심리테스트 메인으로</a>
 	</div>
 	
@@ -213,7 +207,6 @@
 	<a href="#big-bird-end" data-role="button" id="d">구름</a>
 	<a href="${root}/etc/m_Psychological_testing" data-role="button">심리테스트 메인으로</a>
 	</div>
-	<!-- 아직 처리 안 했음 -->
 	
 	<div data-role="dialog" id="big-bird-end" data-position="fixed">
 	<div data-role="header">
@@ -326,7 +319,6 @@
 	<a href="#C" data-role="button">C.주변을 둘러보거나 안내판 등을 보고 있다</a>
 	<a href="#D" data-role="button">D.그냥 바닥을 쳐다보고 있다</a>
 	<a href="#E" data-role="button">E.엘리베이터 LED화면을 계속 보면서<br>'문 열리지마자 타야지' 생각하고 있다.</a>
-	<a href="javascript:gohome()" data-role="button">홈으로</a>
 	<a href="${root}/etc/m_Psychological_testing" data-role="button">심리테스트 메인으로</a>
 	</div>
 	</div>
@@ -503,5 +495,6 @@
 	</div>
 	<a href="${root}/etc/m_Psychological_testing" data-role="button">심리테스트 메인으로</a>
 	</div>
+	<!-- 심리테스트3 END -->
 </body>
 </html>

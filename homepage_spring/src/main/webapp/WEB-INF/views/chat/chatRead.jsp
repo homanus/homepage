@@ -22,160 +22,171 @@ var finalDate = "";
 var timeFlag = true;
 //DB의 변화를 캐치하기 위한 변수
 var table_cnt = 0;
-var dubFlag = true;
+var dupFlag = true;
 var res;
 
 var chatManager = new function(){
-
-this.time_Get = function(){
-		
-		if(!timeFlag){
-			chatManager.check();
-			return false;
-		}else{
-			timeFlag = false;
+	
+	this.time_Get = function(){
 			
-			$.post(
-				"chat_time",
-				"",
-				function(data,textStatus){
-
-					finalDate = data.realtime;
-					chatManager.check();
-				}
-			)
+			if(!timeFlag){
+				chatManager.check();
+				return false;
+			}else{
+				timeFlag = false;
+				
+				$.post(
+					"chat_time",
+					"",
+					function(data,textStatus){
+	
+						finalDate = data.realtime;
+						chatManager.check();
+					}
+				)
+			}
 		}
+		
+	this.check = function(){
+		var parameter = {
+				table_cnt: table_cnt,
+				chat_index: "${dto.chat_index}"
+		};
+		
+		$.post(
+			"chat_check",
+			parameter,
+			function(data,textStatus){
+				
+				if(data.flag == true){
+					
+					table_cnt = data.count;
+					chatManager.show();
+				}
+			}
+		)
 	}
 	
-this.check = function(){
-	
-	$.post(
-		"chat_check",
-		"table_cnt="+table_cnt+"&chat_index=${dto.chat_index}",
-		function(data,textStatus){
-			
-			if(data.flag == true){
+	this.show = function(){
+		
+		var parameter = {
+				table_cnt: table_cnt,
+				chat_index: "${dto.chat_index}",
+				finalDate: finalDate
+		}
+		
+		if(table_cnt == 0){
+			return false;
+		}
+		
+		$.post(
+			"chat_show",
+			parameter,
+			function(data,textStatus){
+				res = data;
+				showme = data;
 				
-				table_cnt = data.count;
+				if(data.cflag == true){
+					chatManager.chat_print();
+				}
+			}
+		)
+	}
+	
+	this.chat_print = function(){
+		var o = document.getElementById("list");
+		var dt, dd;
+		// 채팅내용 추가 하기
+			for(var i=0; i<showme.size; i++){
+				dt = document.createElement("dt");
+				dt.appendChild(document.createTextNode(res.list[i].nickname));
+				o.appendChild(dt);
+				
+				dd = document.createElement("dd");
+				dd.appendChild(document.createTextNode(res.list[i].chat_content));
+				o.appendChild(dd);
+			}
+		//스크롤 가장 아래로 내리기
+		o.scrollTop = o.scrollHeight;
+		timeFlag = true;
+		chatManager.time_Get();
+	}
+	
+	
+	//채팅 내용 및 닉네임을 입력후 서브밋을 하면 누르게 되면, 비동기 통신
+	this.write = function(frm) {
+		//폼 내의 input 태그 값을 가져오기 위함
+		//비동기 통신 요청시 parameter로 보내준다.
+		var param = $("#Please_chat").serialize();
+		
+		//비동기 통신과 동시에 DB에 채팅 내용을 저장한다.
+		$.post(
+			"chat_write",
+			param,
+			function(data, textStatus){
+				//alert(textStatus);
+				
+				//JSON data값을 받아온다.				
+	//				var result = eval("("+data+")");
+				//채팅 내용 비워주기
+				$("#msg").val("");
+				//채팅내용 갱신을 위한 메소드 호출
+	//				chatManager.check();
+			}
+		)//post close
+		
+	}//write close
+	
+	
+	
+	
+	//접속자 닉네임 뿌리기
+	this.loginList = function(){
+			
+			if(dupFlag == false){
+				return false;
+			}
+			
+		$.post(
+			"loginList",
+			"",
+			function(data, textStatus){
+				
+				res = data;
+	
+				chatManager.Connect();
+			}
+		)
+	}
+		<%
+		if(session.getAttribute("id") != null) {
+		%>
+			this.loginList();
+		<%
+		}
+		%>
+	
+	this.Connect = function(){
+		var nick = res.nickname+"님이 접속하셨습니다.";
+		
+		var parameter = {
+				nickname: res.getTime,
+				msg: nick,
+				chat_index: "${dto.chat_index}"
+		}
+		
+		$.post(
+			"chat_write",
+			parameter,
+			function(data,testStatus){
+				dupFlag = false;
 				chatManager.show();
 			}
-		}
-	)
-}
-
-this.show = function(){
-	
-	if(table_cnt == 0){
-		return false;
+		)
 	}
 	
-	$.post(
-		"chat_show",
-		"table_cnt="+table_cnt+"&chat_index=${dto.chat_index}&finalDate="+finalDate,
-		function(data,textStatus){
-			res = data;
-			showme = data;
-			
-			if(data.cflag == true){
-				chatManager.chat_print();
-			}
-		}
-	)
-}
-
-this.chat_print = function(){
-	var o = document.getElementById("list");
-	var dt, dd;
-	// 채팅내용 추가 하기
-		for(var i=0; i<showme.size; i++){
-			
-			
-			dt = document.createElement("dt");
-			dt.appendChild(document.createTextNode(res.list[i].nickname));
-			o.appendChild(dt);
-			
-			dd = document.createElement("dd");
-			dd.appendChild(document.createTextNode(res.list[i].chat_content));
-			o.appendChild(dd);
-			
-			
-	
-		}
-	//스크롤 가장 아래로 내리기
-	o.scrollTop = o.scrollHeight;
-	timeFlag = true;
-	chatManager.time_Get();
-}
-
-
-//채팅 내용 및 닉네임을 입력후 서브밋을 하면 누르게 되면, 비동기 통신
-this.write = function(frm) {
-	//폼 내의 input 태그 값을 가져오기 위함
-	//비동기 통신 요청시 parameter로 보내준다.
-	var param = $("#Please_chat").serialize();
-	
-	//비동기 통신과 동시에 DB에 채팅 내용을 저장한다.
-	$.post(
-		"chat_write",
-		param,
-		function(data, textStatus){
-			//alert(textStatus);
-			
-			//JSON data값을 받아온다.				
-//				var result = eval("("+data+")");
-			//채팅 내용 비워주기
-			$("#msg").val("");
-			//채팅내용 갱신을 위한 메소드 호출
-//				chatManager.check();
-		}
-	)//post close
-	
-}//write close
-
-
-
-
-//접속자 닉네임 뿌리기
-this.loginList = function(){
-		
-		if(dubFlag == false){
-			return false;
-		}
-		
-	$.post(
-		"loginList",
-		"",
-		function(data, textStatus){
-			
-			res = data;
-
-			chatManager.Connect();
-		}
-	)
-}
-	<%
-	if(session.getAttribute("id") != null) {
-	%>
-		this.loginList();
-	<%
-	}
-	%>
-
-this.Connect = function(){
-	var nick = res.nickname+"님이 접속하셨습니다.";
-	
-	$.post(
-		"chat_write",
-		"nickname="+res.getTime+"&msg="+nick+"&chat_index=${dto.chat_index}",
-		function(data,testStatus){
-			dubFlag = false;
-			chatManager.show();
-		}
-	)
-}
-
-//정해둔 시간마다 호출
-setInterval(this.time_Get, interval);
+	//정해둔 시간마다 호출
+	setInterval(this.time_Get, interval);
 
 }//chatManager close
 

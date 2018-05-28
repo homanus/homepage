@@ -77,7 +77,7 @@ public class ImageController {
 		try {
 			list = dao.list(map);
 			int totalRecord = dao.total(map);
-			String paging = Utility.paging3(totalRecord, nowPage, recordPerPage, col, word);
+			String paging = Utility.paging3_image(totalRecord, nowPage, recordPerPage, col, word, request);
 			
 			request.setAttribute("paging", paging);
 			request.setAttribute("list", list);

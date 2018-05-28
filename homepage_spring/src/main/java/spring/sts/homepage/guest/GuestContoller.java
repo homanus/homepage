@@ -161,7 +161,7 @@ public class GuestContoller {
 		List list = dao.list(map);
 		int totalRecord = dao.total(map);
 		
-		String paging = Utility.paging3(totalRecord, nowPage, recordPerPage, col, word);
+		String paging = Utility.paging3_guest(totalRecord, nowPage, recordPerPage, col, word,request);
 		
 		request.setAttribute("list", list);
 		request.setAttribute("col", col);

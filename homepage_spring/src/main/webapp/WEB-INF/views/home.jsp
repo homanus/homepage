@@ -10,7 +10,40 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open Sans">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript">
+function bread(bbsno){
+	var url="${root}/bbs/read";
+	url+="?bbsno="+bbsno;
+	url+="&col=${col}";
+	url+="&word=${word}";
+	url+="&nowPage=${nowPage}";
+	location.href=url;
+}
+function fileDown(filename){
+	var url = "${root}/download";
+	url+="?filename="+filename;
+	url+="&dir=${root}/storage_bbs";
+	
+	location.href = url;
+}
+</script>
 <style>
+TABLE{
+  margin: 0 auto;            /* 테이블 가운데 정렬 */
+  border-color: #AAAAAA;     /* 테이블 외곽선 색깔 */ 
+  border-width: 1px;         /* 테이블 외곽선 두께 */ 
+  border-style: solid;       /* 테이블 외곽선 스타일 */
+  border-collapse: collapse; /* 컬럼의 외곽선을 하나로 결합 */
+  border-spacing:0px;
+  border-style:none;
+  padding:0px;
+}
+.search{
+	width:80%;
+	margin:2px auto;
+	text-align: center;
+}
+
 h1,h2,h3,h4,h5,h6 {font-family: "Oswald"}
 body {font-family: "Open Sans"}
 </style>
@@ -20,8 +53,8 @@ body {font-family: "Open Sans"}
   <header class="w3-display-container w3-wide" id="home">
     <img class="w3-image" src="${root}/w3images/jane.jpg" width="1600" height="1060">
     <div class="w3-display-left w3-padding-large">
-      <h1 class="w3-text-white">What can i do</h1>
-      <h1 class="w3-jumbo w3-text-white w3-hide-small"><b>for you</b></h1>
+      <h1 class="w3-text-white"></h1>
+      <h1 class="w3-jumbo w3-text-white w3-hide-small"><b></b></h1>
 <!--       <h6><button class="w3-button w3-white w3-padding-large w3-large w3-opacity w3-hover-opacity-off" onclick="document.getElementById('subscribe').style.display='block'">SUBSCRIBE</button></h6> -->
     </div>
   </header>
@@ -38,30 +71,100 @@ body {font-family: "Open Sans"}
       <!-- Blog entry -->
       <div class="w3-container w3-white w3-margin w3-padding-large">
         <div class="w3-center">
-          <h3>TITLE HEADING</h3>
-          <h5>Title description, <span class="w3-opacity">May 2, 2016</span></h5>
+          <h5><span class="glyphicon glyphicon-list"></span><span class="w3-opacity">Board</span></h5>
         </div>
+        
+        	<div class="w3-justify">
+				<TABLE style="width:100%">
+				  <thead>
+				    <TR>
+				      <TH><div style="margin:10px">No</div></TH>
+				      <Th><div style="margin:10px">작성자</div></Th>
+				      <Th><div style="margin:10px">제목</div></Th>
+				      <Th><div style="margin:10px">작성날짜</div></Th>
+				      <Th><div style="margin:10px">조회수</div></Th>
+				      <Th><div style="margin:10px">파일명</div></Th>
+				    </tr>
+				    <tr>
+				  </thead>
+			    <c:choose>
+			    	<c:when test="${empty list}">
+					    <tbody>
+						    <tr>
+						    	<td colspan="6">등록된 게시글이 없습니다.</td>
+						    </tr>
+					    </tbody>
+			    	</c:when>
+			    	<c:otherwise>
+			    		<c:forEach var="dto" items="${list }">
+					    	<tbody>
+					    		<tr>
+							    	<td><div style="margin:10px">${dto.bbsno}</div></td>
+							    	<td><div style="margin:10px">${dto.wname }</div></td>
+							    	<td>
+								    	<div style="margin:10px">
+								    		<c:if test="${dto.indent > 0 }">
+								    			<c:forEach begin="0" end="${dto.indent-1}">
+								    				&nbsp;&nbsp;
+								    			</c:forEach>
+								    			<img src='${root}/images/re.jpg'>
+								    		</c:if>
+								    	<a href="javascript:bread('${dto.bbsno}')">${dto.title}</a>
+								    		<c:if test="${util:compareDay(dto.wdate)}">
+												<img src="${root}/images/new.gif">							    		
+								    		</c:if>
+								    		<!-- 댓글 개수 -->
+								    		<c:set var="rcount" value="${util:rcount(dto.bbsno,rdao)}"/>
+								    		<c:if test="${rcount > 0}">
+								    			<span style="color:red">(${rcount })</span>
+								    		</c:if>
+								    	</div>
+							    	</td>
+							    	<td><div style="margin:10px">${dto.wdate}</div></td>
+							    	<td><div style="margin:10px">${dto.viewcnt}</div></td>
+							    	<td>
+							    		<div style="margin:10px">
+											<c:choose>
+												<c:when test="${empty dto.filename}">
+													${dto.filename}
+												</c:when>
+												<c:otherwise>
+													<a href="javascript:fileDown('${dto.filename }')"${dto.filename }>${dto.filename }</a>
+												</c:otherwise>
+											</c:choose>
+										</div>
+							    	</td>
+						    	</tr>
+						    </tbody>
+					   	</c:forEach>
+			    	</c:otherwise>
+			    </c:choose>
+		  </TABLE>
+		  ${paging}
+        	
+        	</div>
 
-        <div class="w3-justify">
-          <img src="${root}/w3images/girl_hat.jpg" alt="Girl Hat" style="width:100%" class="w3-padding-16">
-          <p><strong>More Hats!</strong> I am crazy about hats these days. Some text about this blog entry. Fashion fashion and mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor
-            magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sedtellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-          <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-          <p class="w3-left"><button class="w3-button w3-white w3-border" onclick="likeFunction(this)"><b><i class="fa fa-thumbs-up"></i> Like</b></button></p>
-          <p class="w3-right"><button class="w3-button w3-black" onclick="myFunction('demo1')" id="myBtn"><b>Replies  </b> <span class="w3-tag w3-white">1</span></button></p>
-          <p class="w3-clear"></p>
-          <div class="w3-row w3-margin-bottom" id="demo1" style="display:none">
-            <hr>
-              <div class="w3-col l2 m3">
-                <img src="${root}/w3images/avatar_smoke.jpg" style="width:90px;">
-              </div>
-              <div class="w3-col l10 m9">
-                <h4>George <span class="w3-opacity w3-medium">May 3, 2015, 6:32 PM</span></h4>
-                <p>Great blog post! Following</p>
-              </div>
-          </div>
-        </div>
+<!--         <div class="w3-justify"> -->
+<%--           <img src="${root}/w3images/girl_hat.jpg" alt="Girl Hat" style="width:100%" class="w3-padding-16"> --%>
+<!--           <p><strong>More Hats!</strong> I am crazy about hats these days. Some text about this blog entry. Fashion fashion and mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor -->
+<!--             magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sedtellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p> -->
+<!--           <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p> -->
+<!--           <p class="w3-left"><button class="w3-button w3-white w3-border" onclick="likeFunction(this)"><b><i class="fa fa-thumbs-up"></i> Like</b></button></p> -->
+<!--           <p class="w3-right"><button class="w3-button w3-black" onclick="myFunction('demo1')" id="myBtn"><b>Replies  </b> <span class="w3-tag w3-white">1</span></button></p> -->
+<!--           <p class="w3-clear"></p> -->
+<!--           <div class="w3-row w3-margin-bottom" id="demo1" style="display:none"> -->
+<!--             <hr> -->
+<!--               <div class="w3-col l2 m3"> -->
+<%--                 <img src="${root}/w3images/avatar_smoke.jpg" style="width:90px;"> --%>
+<!--               </div> -->
+<!--               <div class="w3-col l10 m9"> -->
+<!--                 <h4>George <span class="w3-opacity w3-medium">May 3, 2015, 6:32 PM</span></h4> -->
+<!--                 <p>Great blog post! Following</p> -->
+<!--               </div> -->
+<!--           </div> -->
+<!--         </div> -->
       </div>
+      <!-- 게시판 목록 보여줄 공간. -->
       <hr>
 
       <!-- Blog entry -->
