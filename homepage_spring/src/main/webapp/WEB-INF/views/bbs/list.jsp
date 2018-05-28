@@ -76,7 +76,7 @@ function fileDown(filename){
 					 	
 					 	<option value="total">전체출력</option>
 					 </select>
-					 <input type="search" name="word" value="${word }"  required> <!-- 검색어 -->
+					 <input type="search" name="word" value="${word}"  required> <!-- 검색어 -->
 					 <button class="w3-button w3-white w3-border w3-small">검색</button>
 					 <button type="button" class="w3-button w3-black w3-small" onclick="create()">등록</button>
 				 </form>

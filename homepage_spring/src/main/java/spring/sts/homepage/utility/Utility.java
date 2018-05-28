@@ -652,7 +652,8 @@ public class Utility {
 	
 	
 	//채팅 방 페이징을 위한 페이징
-		public static String cpaging(int totalRecord, int cPage, int recordPerPage, String col, String word) {
+		public static String cpaging(int totalRecord, int cPage, int recordPerPage,
+				String col, String word, HttpServletRequest request) {
 			int pagePerBlock = 5; // 블럭당 페이지 수
 			int totalPage = (int) (Math.ceil((double) totalRecord / recordPerPage)); // 전체 페이지
 			int totalGrp = (int) (Math.ceil((double) totalPage / pagePerBlock));// 전체 그룹
@@ -693,7 +694,7 @@ public class Utility {
 
 			int _nowPage = (nowGrp - 1) * pagePerBlock; // 10개 이전 페이지로 이동
 			if (nowGrp >= 2) {
-				str.append("<span class='span_box_1'><A href='./list.do?col=" + col + "&word=" + word + "&cPage="
+				str.append("<span class='span_box_1'><A href='"+request.getContextPath()+"/chat/list?col=" + col + "&word=" + word + "&cPage="
 						+ _nowPage + "'>이전</A></span>");
 			}
 			// -----------------------
@@ -706,14 +707,14 @@ public class Utility {
 				if (cPage == i) {
 					str.append("<span class='span_box_2'>" + i + "</span>"); // 현재 페이지에대한 색 자기페이지라서 링크안걸리고
 				} else {
-					str.append("<span class='span_box_1'><A href='./list.do?col=" + col + "&word=" + word + "&cPage=" + i
+					str.append("<span class='span_box_1'><A href='"+request.getContextPath()+"/chat/list?col=" + col + "&word=" + word + "&cPage=" + i
 							+ "'>" + i + "</A></span>"); // 내페이지를 제외한 다른 곳
 				}
 			}
 
 			_nowPage = (nowGrp * pagePerBlock) + 1; // 10개 다음 페이지로 이동
 			if (nowGrp < totalGrp) {
-				str.append("<span class='span_box_1'><A href='./list.do?col=" + col + "&word=" + word + "&cPage="
+				str.append("<span class='span_box_1'><A href='"+request.getContextPath()+"/chat/list?col=" + col + "&word=" + word + "&cPage="
 						+ _nowPage + "'>다음</A></span>");
 			}
 			str.append("</DIV>");

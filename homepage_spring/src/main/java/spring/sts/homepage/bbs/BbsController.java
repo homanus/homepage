@@ -167,7 +167,7 @@ public class BbsController {
 			List<BbsDTO> list = dao.list(map);
 			int totalRecord = dao.total(map);
 			
-			String paging = Utility.paging3_bbs(totalRecord, nowPage, recordPerPage, col, word,request);
+			String paging = Utility.paging3_bbs(totalRecord, nowPage, recordPerPage, col, word, request);
 			
 			int nPage = 1;
 			

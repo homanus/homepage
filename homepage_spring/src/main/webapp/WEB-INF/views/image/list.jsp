@@ -35,7 +35,6 @@ function filedown(fname){
 	url+="&dir=/storage_image";
 	
 	location.href=url;
-	
 }
 function idelete(ino){
 	var url="delete";

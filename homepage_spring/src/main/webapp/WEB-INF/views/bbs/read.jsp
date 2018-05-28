@@ -181,7 +181,7 @@ function rdelete(rnum){
 				  <hr>
 		    </c:forEach>
 		    
-		    ${paging }
+		    ${paging}
 		    
 		    <div class="rcreate">
 			  	<form name="rform"

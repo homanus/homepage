@@ -145,17 +145,13 @@ public class ChatController{
 		List list = rdao.list(map);
 
 		int totalRecord = rdao.total(map);
-		String paging = Utility.cpaging(totalRecord, cPage, recordPerPage, col, word);
-		
-		int i = 0; 
+		String paging = Utility.cpaging(totalRecord, cPage, recordPerPage, col, word, request);
 		
 		request.setAttribute("cPage", cPage);
 		request.setAttribute("col", col);
 		request.setAttribute("word", word);
 		request.setAttribute("list", list);
 		request.setAttribute("paging", paging);
-		request.setAttribute("i", i);
-		
 		
 		return "/chat/list";
 	}

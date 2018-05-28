@@ -19,12 +19,34 @@ function bread(bbsno){
 	url+="&nowPage=${nowPage}";
 	location.href=url;
 }
-function fileDown(filename){
+function bbs_fileDown(filename){
 	var url = "${root}/download";
 	url+="?filename="+filename;
-	url+="&dir=${root}/storage_bbs";
+	url+="&dir=/${root}/storage_bbs";
 	
 	location.href = url;
+}
+function read(ino){
+	var url = "${root}/image/read";
+	url+="?ino="+ino;
+	url+="&nowPage=${image_nowPage}";
+	url+="&col=${image_col}";
+	url+="&word=${image_word}";
+	location.href=url;
+}
+function image_filedown(fname){
+	var url = "${root}/download";
+	url+="?filename="+fname;
+	url+="&dir=/${root}/storage_image";
+	
+	location.href=url;
+}
+function chat(){
+	var url="${root}/chat/list";
+	
+	var wr = window.open(url,"채팅창","width=440, height=610, resizable=no");
+	wr.moveTo(((window.screen.width-500)/2),((window.screen.height-500)/2));
+	
 }
 </script>
 <style>
@@ -71,7 +93,9 @@ body {font-family: "Open Sans"}
       <!-- Blog entry -->
       <div class="w3-container w3-white w3-margin w3-padding-large">
         <div class="w3-center">
-          <h5><span class="glyphicon glyphicon-list"></span><span class="w3-opacity">Board</span></h5>
+          <h5><span class="glyphicon glyphicon-list">Board</span>
+<!--           <span class="w3-opacity">Board</span> -->
+          </h5>
         </div>
         
         	<div class="w3-justify">
@@ -88,7 +112,7 @@ body {font-family: "Open Sans"}
 				    <tr>
 				  </thead>
 			    <c:choose>
-			    	<c:when test="${empty list}">
+			    	<c:when test="${empty bbs_list}">
 					    <tbody>
 						    <tr>
 						    	<td colspan="6">등록된 게시글이 없습니다.</td>
@@ -96,40 +120,40 @@ body {font-family: "Open Sans"}
 					    </tbody>
 			    	</c:when>
 			    	<c:otherwise>
-			    		<c:forEach var="dto" items="${list }">
+			    		<c:forEach var="bbs_dto" items="${bbs_list }">
 					    	<tbody>
 					    		<tr>
-							    	<td><div style="margin:10px">${dto.bbsno}</div></td>
-							    	<td><div style="margin:10px">${dto.wname }</div></td>
+							    	<td><div style="margin:10px">${bbs_dto.bbsno}</div></td>
+							    	<td><div style="margin:10px">${bbs_dto.wname }</div></td>
 							    	<td>
 								    	<div style="margin:10px">
-								    		<c:if test="${dto.indent > 0 }">
-								    			<c:forEach begin="0" end="${dto.indent-1}">
+								    		<c:if test="${bbs_dto.indent > 0 }">
+								    			<c:forEach begin="0" end="${bbs_dto.indent-1}">
 								    				&nbsp;&nbsp;
 								    			</c:forEach>
 								    			<img src='${root}/images/re.jpg'>
 								    		</c:if>
-								    	<a href="javascript:bread('${dto.bbsno}')">${dto.title}</a>
-								    		<c:if test="${util:compareDay(dto.wdate)}">
+								    	<a href="javascript:bread('${bbs_dto.bbsno}')">${bbs_dto.title}</a>
+								    		<c:if test="${util:compareDay(bbs_dto.wdate)}">
 												<img src="${root}/images/new.gif">							    		
 								    		</c:if>
-								    		<!-- 댓글 개수 -->
-								    		<c:set var="rcount" value="${util:rcount(dto.bbsno,rdao)}"/>
+<!-- 								    		댓글 개수 -->
+								    		<c:set var="rcount" value="${util:rcount(bbs_dto.bbsno,rdao)}"/>
 								    		<c:if test="${rcount > 0}">
 								    			<span style="color:red">(${rcount })</span>
 								    		</c:if>
 								    	</div>
 							    	</td>
-							    	<td><div style="margin:10px">${dto.wdate}</div></td>
-							    	<td><div style="margin:10px">${dto.viewcnt}</div></td>
+							    	<td><div style="margin:10px">${bbs_dto.wdate}</div></td>
+							    	<td><div style="margin:10px">${bbs_dto.viewcnt}</div></td>
 							    	<td>
 							    		<div style="margin:10px">
 											<c:choose>
-												<c:when test="${empty dto.filename}">
-													${dto.filename}
+												<c:when test="${empty bbs_dto.filename}">
+													${bbs_dto.filename}
 												</c:when>
 												<c:otherwise>
-													<a href="javascript:fileDown('${dto.filename }')"${dto.filename }>${dto.filename }</a>
+													<a href="javascript:bbs_fileDown('${bbs_dto.filename }')"${bbs_dto.filename }>${bbs_dto.filename }</a>
 												</c:otherwise>
 											</c:choose>
 										</div>
@@ -140,29 +164,9 @@ body {font-family: "Open Sans"}
 			    	</c:otherwise>
 			    </c:choose>
 		  </TABLE>
-		  ${paging}
+		  ${bbs_paging}
         	
         	</div>
-
-<!--         <div class="w3-justify"> -->
-<%--           <img src="${root}/w3images/girl_hat.jpg" alt="Girl Hat" style="width:100%" class="w3-padding-16"> --%>
-<!--           <p><strong>More Hats!</strong> I am crazy about hats these days. Some text about this blog entry. Fashion fashion and mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor -->
-<!--             magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sedtellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p> -->
-<!--           <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p> -->
-<!--           <p class="w3-left"><button class="w3-button w3-white w3-border" onclick="likeFunction(this)"><b><i class="fa fa-thumbs-up"></i> Like</b></button></p> -->
-<!--           <p class="w3-right"><button class="w3-button w3-black" onclick="myFunction('demo1')" id="myBtn"><b>Replies  </b> <span class="w3-tag w3-white">1</span></button></p> -->
-<!--           <p class="w3-clear"></p> -->
-<!--           <div class="w3-row w3-margin-bottom" id="demo1" style="display:none"> -->
-<!--             <hr> -->
-<!--               <div class="w3-col l2 m3"> -->
-<%--                 <img src="${root}/w3images/avatar_smoke.jpg" style="width:90px;"> --%>
-<!--               </div> -->
-<!--               <div class="w3-col l10 m9"> -->
-<!--                 <h4>George <span class="w3-opacity w3-medium">May 3, 2015, 6:32 PM</span></h4> -->
-<!--                 <p>Great blog post! Following</p> -->
-<!--               </div> -->
-<!--           </div> -->
-<!--         </div> -->
       </div>
       <!-- 게시판 목록 보여줄 공간. -->
       <hr>
@@ -170,105 +174,70 @@ body {font-family: "Open Sans"}
       <!-- Blog entry -->
       <div class="w3-container w3-white w3-margin w3-padding-large">
         <div class="w3-center">
-          <h3>TITLE HEADING</h3>
-          <h5>Title description, <span class="w3-opacity">April 23, 2016</span></h5>
+          <h5><span class="glyphicon glyphicon-film"></span>Imageboard
+<!--           <span class="w3-opacity">Image board</span> -->
+          </h5>
         </div>
 
-        <div class="w3-justify">
-          <img src="${root}/w3images/man_hat.jpg" alt="Men in Hats" style="width:100%" class="w3-padding-16">
-          <p><strong>Hats!</strong> The trend this summer is hats for men!</p>
-          <p>Some text about this blog entry. Fashion fashion and mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies
-            mi non congue ullam corper. Praesent tincidunt sedtellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-          <p class="w3-left"><button class="w3-button w3-white w3-border" onclick="likeFunction(this)"><b><i class="fa fa-thumbs-up"></i> Like</b></button></p>
-          <p class="w3-right"><button class="w3-button w3-black" onclick="myFunction('demo2')"><b>Replies  </b> <span class="w3-tag w3-white">2</span></button></p>
-          <p class="w3-clear"></p>
-          
-          <!-- Example of comment field -->
-          <div id="demo2" style="display:none">
-            <div class="w3-row">
-              <hr>
-              <div class="w3-col l2 m3">
-                <img src="${root}/w3images/girl_train.jpg" style="width:90px;">
-              </div>
-              <div class="w3-col l10 m9">
-                <h4>Amber <span class="w3-opacity w3-medium">April 26, 2015, 10:52 PM</span></h4>
-                <p>Love your blog page! Simply the best! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><br>
-              </div>
-            </div>
-            <div class="w3-row w3-margin-bottom">
-              <div class="w3-col l2 m3">
-                <img src="${root}/w3images/girl.jpg" style="width:90px;">
-              </div>
-              <div class="w3-col l10 m9">
-                <h4>Angie <span class="w3-opacity w3-medium">April 23, 2015, 9:12 PM</span></h4>
-                <p>Love hats!!</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class="w3-justify"><!-- image공간 시작 -->
+        	<table class="table table-hover">
+				<tr>
+					<th>사진</th>
+					<th>제목</th>
+					<th>이름</th>
+					<th>작성날짜</th>
+				</tr>
+				<c:choose>
+					<c:when test="${empty image_list}">
+				<tr>
+					<td colspan="4">작성된 글이 없습니다.</td>
+				</tr>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="image_dto" items="${image_list}">
+							<tr>
+								<td>
+									<a href="javascript:image_filedown('${image_dto.fname}')"${image_dto.fname}>
+										<img src="${root}/storage_image/${image_dto.fname}" width="100px" height="80px">
+									</a>
+								</td>
+								<td><a href="javascript:read('${image_dto.ino }')">${image_dto.title }</a></td>
+								<td>${image_dto.mname }</td>
+								<td>${image_dto.wdate }</td>
+							</tr>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+			</table>
+				${image_paging}
+        </div><!-- image 공간 끝 -->
       </div>
 
       <!-- Blog entry -->
-      <%-- <div class="w3-container w3-white w3-margin w3-padding-large">
-        <div class="w3-center">
-          <h3>TITLE HEADING</h3>
-          <h5>Title description, <span class="w3-opacity">April 7, 2016</span></h5>
-        </div>
-
-        <div class="w3-justify">
-          <img src="${root}/w3images/runway.jpg" alt="Runway" style="width:100%" class="w3-padding-16">
-          <p><strong>Dont miss!</strong> The runway in New York City this weekend is gonna be legendary!</p>
-          <p>Some text about this blog entry. Fashion fashion and mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies
-            mi non congue ullam corper. Praesent tincidunt sedtellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-          <p class="w3-left"><button class="w3-button w3-white w3-border" onclick="likeFunction(this)"><b><i class="fa fa-thumbs-up"></i> Like</b></button></p>
-          <p class="w3-right"><button class="w3-button w3-black" onclick="myFunction('demo3')"><b>Replies  </b> <span class="w3-tag w3-white">3</span></button></p>
-           --%><p class="w3-clear"></p>
-          
-          <!-- Example of comment field -->
-         <%--  <div id="demo3" style="display:none">
-            <hr>
-            <div class="w3-row w3-margin-bottom">
-              <div class="w3-col l2 m3">
-                <img src="${root}/w3images/girl_mountain.jpg" style="width:90px;">
-              </div>
-              <div class="w3-col l10 m9">
-                <h4>Jane <span class="w3-opacity w3-medium">April 10, 2015, 7:22 PM</span></h4>
-                <p>That was a great runway show! Thanks for everything.</p>
-              </div>
-            </div>
-            <div class="w3-row w3-margin-bottom">
-              <div class="w3-col l2 m3">
-                <img src="${root}/w3images/boy.jpg" style="width:90px;">
-              </div>
-              <div class="w3-col l10 m9">
-                <h4>John <span class="w3-opacity w3-medium">April 8, 2015, 10:32 PM</span></h4>
-                <p>Keep up the GREAT work! I am cheering for you!! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
-              </div>
-            </div>
-            <div class="w3-row w3-margin-bottom">
-              <div class="w3-col l2 m3">
-                <img src="${root}/w3images/girl_hood.jpg" style="width:90px;">
-              </div>
-              <div class="w3-col l10 m9">
-                <h4>Anja <span class="w3-opacity w3-medium">April 7, 2015, 9:12 PM</span></h4>
-                <p>Cant wait for the runway to start!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-       --%>
-    <!-- END BLOG ENTRIES -->
+       <div class="w3-container w3-white w3-margin w3-padding-large">
+	       <div class="w3-center">
+		       <h3>I like this picture</h3>
+<!-- 		       <h5><span class="w3-opacity">April 7, 2016</span></h5> -->
+	       </div>
+	
+	       <div class="w3-justify">
+		       <img src="${root}/w3images/runway.jpg" alt="Runway" style="width:100%" class="w3-padding-16">
+	       </div>
+       </div><!-- picture end -->
+       
+         <p class="w3-clear"></p>
+         
     </div>
 
     <!-- About/Information menu -->
     <div class="w3-col l4">
       <!-- About Card -->
       <div class="w3-white w3-margin">
-        <img src="${root}/w3images/avatar_girl2.jpg" alt="Jane" style="width:100%" class="w3-grayscale">
+        <img src="${root}/w3images/HanJeongHwan_blue.jpg" style="width:100%">
+<%--         <img src="${root}/w3images/HanJeongHwan.jpg" style="width:100%" class="w3-grayscale"> --%>
         <div class="w3-container w3-black">
-          <h4>My Name</h4>
-          <p>Just me, myself and I, exploring the universe of uknownment. I have a heart of love and a interest of lorem ipsum and mauris neque quam blog. I want to share my world with you.</p>
+          <h4>한정환 1995.10.20</h4>
+          <p>네, 바로 접니다. 이 홈페이지를 만든 사람</p>
         </div>
       </div>
       <hr>
@@ -276,66 +245,56 @@ body {font-family: "Open Sans"}
       <!-- Posts -->
       <div class="w3-white w3-margin">
         <div class="w3-container w3-padding w3-black">
-          <h4>Popular Posts</h4>
+          <h4>Chat room</h4>
         </div>
-        <ul class="w3-ul w3-hoverable w3-white">
-          <li class="w3-padding-16">
-            <img src="${root}/w3images/avatar_smoke.jpg" alt="Image" class="w3-left w3-margin-right" style="width:50px">
-            <span class="w3-large">Denim</span>
-            <br>
-            <span>Sed mattis nunc</span>
-          </li>
-          <li class="w3-padding-16">
-            <img src="${root}/w3images/bandmember.jpg" alt="Image" class="w3-left w3-margin-right" style="width:50px">
-            <span class="w3-large">Sweaters</span>
-            <br>
-            <span>Praes tinci sed</span>
-          </li>
-          <li class="w3-padding-16">
-            <img src="${root}/w3images/workshop.jpg" alt="Image" class="w3-left w3-margin-right" style="width:50px">
-            <span class="w3-large">Workshop</span>
-            <br>
-            <span>Ultricies congue</span>
-          </li>
-          <li class="w3-padding-16">
-            <img src="${root}/w3images/avatar_smoke.jpg" alt="Image" class="w3-left w3-margin-right w3-sepia" style="width:50px">
-            <span class="w3-large">Trends</span>
-            <br>
-            <span>Lorem ipsum dipsum</span>
-          </li>
-        </ul>
+        	<TABLE class="table table-hover" style="width:100%; ">
+			   <c:if test="${empty chat_list}">
+					    <tr>
+					    	<td colspan="4">등록된 채팅방이 없습니다.</td>
+					    </tr>
+			   </c:if>
+			    <tr>
+				  <th>번호</th>
+			      <th>채팅방 제목</th>
+			      <th>방장</th>
+			    </tr>
+			<c:forEach var="chat_dto" items="${chat_list}">
+			    <tr>
+			      <td>${chat_dto.chat_index}</td>
+			       <td id="up"><a href="javascript:chat()">${chat_dto.chat_title}</a></td>
+			      <td>${chat_dto.chat_nickname}</td>
+			    </tr>
+			</c:forEach>
+		  </TABLE>
       </div>
       <hr>
 
-      <!-- Advertising -->
-      <div class="w3-white w3-margin">
-        <div class="w3-container w3-padding w3-black">
-          <h4>Advertise</h4>
-        </div>
-        <div class="w3-container w3-white">
-          <div class="w3-container w3-display-container w3-light-grey w3-section" style="height:200px">
-            <span class="w3-display-middle">Your AD Here</span>
-          </div>
-        </div>
-      </div>
-      <hr>
 
       <!-- Tags -->
-      <!-- <div class="w3-white w3-margin">
+       <div class="w3-white w3-margin">
         <div class="w3-container w3-padding w3-black">
           <h4>Tags</h4>
         </div>
         <div class="w3-container w3-white">
           <p>
-            <span class="w3-tag w3-black w3-margin-bottom">Fashion</span> <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">New York</span> <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">London</span>
-            <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">Hats</span> <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">Norway</span> <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">Sweaters</span>
-            <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">Ideas</span> <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">Deals</span> <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">Accessories</span>
-            <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">News</span> <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">Clothing</span> <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">Shopping</span>
-            <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">Jeans</span> <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">Trends</span>
+            <span class="w3-tag w3-black w3-margin-bottom">잘생김</span>
+            <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">#계획적</span>
+            <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">#긍정적</span>
+            <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">#자신감</span>
+            <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">#빼면 시체</span>
+            <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">#성실함</span>
+            <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">#판타지</span>
+            <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">#자존감</span>
+            <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">#노력파</span>
+            <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">#책이좋아</span>
+            <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">#집중력</span>
+            <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">#24살</span>
+            <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">#노래</span>
+            <span class="w3-tag w3-light-grey w3-small w3-margin-bottom">#바다</span>
           </p>
         </div>
       </div>
-      <hr> -->
+      <hr>
 
       <!-- Inspiration -->
       <div class="w3-white w3-margin">
@@ -355,7 +314,7 @@ body {font-family: "Open Sans"}
       </div>
       <hr>
 
-      <!-- <div class="w3-white w3-margin">
+       <div class="w3-white w3-margin">
         <div class="w3-container w3-padding w3-black">
           <h4>Follow Me</h4>
         </div>
@@ -368,7 +327,7 @@ body {font-family: "Open Sans"}
           <i class="fa fa-linkedin w3-hover-opacity"></i>
         </div>
       </div>
-      <hr> -->
+      <hr>
       
       <!-- Subscribe -->
 <!--       <div class="w3-white w3-margin">
@@ -391,43 +350,5 @@ body {font-family: "Open Sans"}
 <!-- END w3-content -->
 </div>
 
-<!-- Subscribe Modal -->
-<!-- <div id="subscribe" class="w3-modal w3-animate-opacity">
-  <div class="w3-modal-content" style="padding:32px">
-    <div class="w3-container w3-white">
-      <i onclick="document.getElementById('subscribe').style.display='none'" class="fa fa-remove w3-transparent w3-button w3-xlarge w3-right"></i>
-      <h2 class="w3-wide">SUBSCRIBE</h2>
-      <p>Join my mailing list to receive updates on the latest blog posts and other things.</p>
-      <p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail"></p>
-      <button type="button" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom" onclick="document.getElementById('subscribe').style.display='none'">Subscribe</button>
-    </div>
-  </div>
-</div> -->
-
-<!-- Footer -->
-<!-- <footer class="w3-container w3-dark-grey" style="padding:32px">
-  <a href="#" class="w3-button w3-black w3-padding-large w3-margin-bottom"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
-  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-</footer> -->
-
-
-<!-- 	<script>
-		// Toggle between hiding and showing blog replies/comments
-		document.getElementById("myBtn").click();
-		function myFunction(id) {
-			var x = document.getElementById(id);
-			if (x.className.indexOf("w3-show") == -1) {
-				x.className += " w3-show";
-			} else {
-				x.className = x.className.replace(" w3-show", "");
-			}
-		}
-
-		function likeFunction(x) {
-			x.style.fontWeight = "bold";
-			x.innerHTML = "✓ Liked";
-		}
-	</script>
- -->
 </body>
 </html>
