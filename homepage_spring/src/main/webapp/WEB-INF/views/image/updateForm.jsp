@@ -79,7 +79,7 @@ function incheck(f){
 					  </tr>
 					    <TR>
 					      <TH>수정 파일</TH>
-					      <TD><input type="file" name="fnameMF" accept=".jpg,.png,.gif" size="15"></TD>
+					      <TD><input type="file" name="fnameMF" accept=".jpg,.png,.gif" size="15" required="required"></TD>
 					    </TR>
 					    <TR>
 					      <TH>이름</TH>

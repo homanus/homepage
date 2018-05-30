@@ -27,6 +27,7 @@ h1,h2,h3,h4,h5,h6 {font-family: "Oswald"}
 body {font-family: "Open Sans"}
 
 </style> 
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script type="text/javascript">
 function blist(){
 	var url = "list";
@@ -90,31 +91,123 @@ function input(f){
 		f.content.focus();
 		
 		return false;
+	}else{
+		var parameter = $("#rform").serialize();
+		
+		$.post(
+				"rcreate",
+				parameter,
+				function(data, textStatus){
+					$("[name=content]").val("");
+					reply_list(data);
+				}
+		)
+		return false;
 	}
-
+	return false;
+	
 }
 
-function rupdate(rnum,rcontent){
-	var f = document.rform;
+
+function reply_list(data){
 	
-	f.content.value = rcontent;
-	f.rnum.value = rnum;
-	f.rsubmit.value="수정";
-	f.action="./rupdate";
+	var param = {
+			nowPage: data.nowPage,
+			col: data.col,
+			word: data.word,
+			bbsno: data.bbsno,
+			nPage: data.nPage
+	}
+	
+	$.post(
+		"rlist",
+		param,
+		function(data, textStatus){
+			
+			var con_list = "";
+			
+			for(var i=0; i<data.size; i++){
+				con_list += "<div class='rlist' style='width: 50%;'>";
+				con_list += data.rlist[i].id+"<span style='float: right'>"+data.rlist[i].regdate+"</span><br>";
+				con_list += "<p>"+data.rlist[i].content;
+				if('${sessionScope.id}'==data.rlist[i].id){
+					con_list += "<span style='float: right'>"
+					con_list += "<a href='javascript:rupdate("+data.rlist[i].rnum+")'>수정</a>|";
+					con_list += "<a href='javascript:rdelete("+data.rlist[i].rnum+")'>삭제</a></span>";
+				}
+				
+				con_list += "</p></div><hr>";
+			}
+			$("#list_div").html(con_list);
+			$("#list_paging").html("${paging}");
+		}
+	)
+}
+
+$(function(){
+	var parameter = $("#rform").serialize();
+	$.post(
+			"loading",
+			parameter,
+			function(data, textStatus){
+				reply_list(data);
+			}
+	)
+});
+
+function rupdate(rnum){
+	var param = {
+			rnum: rnum
+	}
+	$.post(
+		"getContent",
+		param,
+		function(data, textStatus){
+			var f = document.rform;
+			f.content.value = data.content;
+			f.rnum.value = rnum;
+			f.rsubmit.value="수정";
+			f.action="./rupdate";
+			$("#rform").attr("onsubmit","return update_ajax(this);");
+		}
+	)
+	
+}
+
+function update_ajax(f){
+	var parameter = $("#rform").serialize();
+	$.post(
+			"rupdate",
+			parameter,
+			function(data, textStatus){
+				reply_list(data);
+				f.content.value = "";
+				f.rsubmit.value="등록";
+				f.action="./rcreate";
+				$("#rform").attr("onsubmit","return input(this);");
+			}
+	)
+	return false;
 }
 
 function rdelete(rnum){
 	if(confirm("정말 삭제 하시겠습니까?")){
-		var url="./rdelete";
-		url += "?rnum="+rnum;
-		url += "&bbsno=${dto.bbsno}";
-		url += "&nowPage=${param.nowPage}";
-		url += "&nPage=${nPage}";
-		url += "&col=${param.col}";
-		url += "&word=${param.word}";
 		
-		location.href=url;
-		
+		var parameter={
+				bbsno: '${dto.bbsno}',
+				rnum: rnum,
+				col: '${param.col}',
+				word: '${param.word}',
+				nowPage: '${param.nowPage}',
+				nPage: '${nPage}'
+		}
+		$.post(
+			"rdelete",
+			parameter,
+			function(data, textStatus){
+				reply_list(data);
+			}
+		)
 	}
 }
 </script>
@@ -165,26 +258,15 @@ function rdelete(rnum){
 		    <input type='button' class="w3-button w3-black" value='삭제' onclick="bdelete()">
 		    <hr>
 		    
-		    <c:forEach var="rdto" items="${rlist }">
-		    	  <div class="rlist" style="width: 50%;">
-					  	${rdto.id} <span style="float: right">${rdto.regdate}</span><br>
-					  <p>
-					  	${rdto.content}
-					  <c:if test="${sessionScope.id==rdto.id}">
-					  	<span style="float: right">
-					  		<a href="javascript:rupdate('${rdto.rnum }','${rdto.content }')">수정</a>|
-							<a href="javascript:rdelete('${rdto.rnum }')">삭제</a>
-					  	</span>
-					  </c:if>
-					  </p>
-				  </div>
-				  <hr>
-		    </c:forEach>
+		    <div id="list_div">
+		    </div>
 		    
-		    ${paging}
+		    <div id="list_paging">
+		    </div>
 		    
 		    <div class="rcreate">
 			  	<form name="rform"
+			  	id="rform"
 			  	action="./rcreate"
 			  	method="post"
 			  	onsubmit="return input(this)">

@@ -6,10 +6,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.codehaus.jackson.map.introspect.JacksonAnnotationIntrospector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
 import spring.model.homepage.bbs.BbsDTO;
 import spring.model.homepage.bbs.BbsMgr;
@@ -37,7 +40,8 @@ public class BbsController {
 	}
 	
 	@RequestMapping("/bbs/rdelete")
-	public String rdelete(HttpServletRequest request, Model model) {
+	public ModelAndView rdelete(HttpServletRequest request, Model model) {
+		ModelAndView modelAndView = new ModelAndView(new MappingJacksonJsonView());
 		
 		int rnum = Integer.parseInt(request.getParameter("rnum"));
 		int bbsno = Integer.parseInt(request.getParameter("bbsno"));
@@ -48,26 +52,26 @@ public class BbsController {
 		
 		try {
 			rdao.delete(rnum);
-			model.addAttribute("rnum",rnum);
-			model.addAttribute("bbsno",bbsno);
-			model.addAttribute("nowPage",nowPage);
-			model.addAttribute("nPage",nPage);
-			model.addAttribute("col",col);
-			model.addAttribute("word",word);
+			modelAndView.addObject("rnum",rnum);
+			modelAndView.addObject("bbsno",bbsno);
+			modelAndView.addObject("nowPage",nowPage);
+			modelAndView.addObject("nPage",nPage);
+			modelAndView.addObject("col",col);
+			modelAndView.addObject("word",word);
 			
-			return "redirect:/bbs/read";
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			
-			return "/bbs/error";
 		}
 		
+		return modelAndView;
 	}
 	
 	@RequestMapping("/bbs/rupdate")
-	public String rupdate(ReplyDTO dto, HttpServletRequest request, Model model) {
+	public ModelAndView rupdate(ReplyDTO dto, HttpServletRequest request, Model model) {
+		
+		ModelAndView modelAndView = new ModelAndView(new MappingJacksonJsonView());
 		
 		try {
 			rdao.update(dto);
@@ -78,34 +82,120 @@ public class BbsController {
 			model.addAttribute("nPage", request.getParameter("nPage"));
 			model.addAttribute("bbsno", request.getParameter("bbsno"));
 			
-			return "redirect:/bbs/read";
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "/bbs/error";
 		}
+		
+		return modelAndView;
 		
 	}
 	
+	@RequestMapping("/bbs/getContent")
+	public ModelAndView getContent(HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView(new MappingJacksonJsonView());
+		
+		try {
+			ReplyDTO dto = (ReplyDTO) rdao.read(Integer.parseInt(request.getParameter("rnum")));
+			String content = dto.getContent();
+			modelAndView.addObject("content",content);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return modelAndView;
+		
+	}
+	
+	@RequestMapping("/bbs/rlist")
+	public ModelAndView rlist(HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView(new MappingJacksonJsonView());
+		
+		/**댓글 관련**/
+		
+		try {
+			request.setCharacterEncoding("UTF-8");
+			String url = "read";
+			int bbsno = Integer.parseInt(request.getParameter("bbsno"));
+			int nPage = 1;
+			int recordPerPage = 5;
+			if(request.getParameter("nPage")!=null) {
+				nPage = Integer.parseInt(request.getParameter("nPage"));
+			}
+			
+			
+			int sno = ((nPage-1)*recordPerPage)+1;
+			int eno = (nPage*recordPerPage);
+			
+			Map map = new HashMap();
+			map.put("sno", sno);
+			map.put("eno", eno);
+			map.put("bbsno", bbsno);
+			
+			List rlist = rdao.list(map);
+			int total = rdao.total(bbsno);
+			String col = request.getParameter("col");
+			String word = request.getParameter("word");
+			int nowPage = Integer.parseInt(request.getParameter("nowPage"));
+			
+			String paging = Utility.paging2(total, nPage, recordPerPage, url, bbsno, nowPage, col, word);
+			
+			modelAndView.addObject("rlist",rlist);
+			modelAndView.addObject("paging",paging);
+			modelAndView.addObject("nPage",nPage);
+			modelAndView.addObject("size",rlist.size());
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping("/bbs/loading")
+	public ModelAndView loading(HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView(new MappingJacksonJsonView());
+		int nowPage = Integer.parseInt(request.getParameter("nowPage"));
+		String col = request.getParameter("col");
+		String word = request.getParameter("word");
+		int bbsno = Integer.parseInt(request.getParameter("bbsno"));
+		int nPage = Integer.parseInt(request.getParameter("nPage"));
+		
+		modelAndView.addObject("col",col);
+		modelAndView.addObject("word",word);
+		modelAndView.addObject("nowPage",nowPage);
+		modelAndView.addObject("bbsno",bbsno);
+		modelAndView.addObject("nPage",nPage);
+		
+		return modelAndView;
+	}
+	
 	@RequestMapping("/bbs/rcreate")
-	public String rcreate(ReplyDTO dto, HttpServletRequest request,Model model) {
+	public ModelAndView rcreate(ReplyDTO dto, HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView(new MappingJacksonJsonView());
 		try {
 			rdao.create(dto);
-			
 			int nowPage = Integer.parseInt(request.getParameter("nowPage"));
 			String col = request.getParameter("col");
 			String word = request.getParameter("word");
 			
-			model.addAttribute("col",col);
-			model.addAttribute("word",word);
-			model.addAttribute("nowPage",nowPage);
-			model.addAttribute("bbsno",dto.getBbsno());
+			modelAndView.addObject("col",col);
+			modelAndView.addObject("word",word);
+			modelAndView.addObject("nowPage",nowPage);
+			modelAndView.addObject("bbsno",dto.getBbsno());
 			
-			return "redirect:/bbs/read";
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "/bbs/error";
 		}
+		
+		return modelAndView;
+		
 	}
 	
 	@RequestMapping("/bbs/create")
@@ -216,8 +306,8 @@ public class BbsController {
 			map.put("eno", eno);
 			map.put("bbsno", bbsno);
 			
-			List rlist = rdao.list(map);
 			
+			List rlist = rdao.list(map);
 			int total = rdao.total(bbsno);
 			String col = request.getParameter("col");
 			String word = request.getParameter("word");
@@ -229,6 +319,7 @@ public class BbsController {
 			model.addAttribute("rlist",rlist);
 			model.addAttribute("paging",paging);
 			model.addAttribute("nPage",nPage);
+			model.addAttribute("size",rlist.size());
 			
 			return "/bbs/read";
 		}catch(Exception e){
@@ -377,22 +468,5 @@ public class BbsController {
 		}
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }
