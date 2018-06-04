@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
@@ -87,6 +88,7 @@ public class MemberController {
 		
 	}
 	
+	@ResponseBody
 	@RequestMapping("/member/sendMail")
 	public ModelAndView sendMail(Model model, HttpServletRequest request) {
 		
@@ -146,6 +148,7 @@ public class MemberController {
 		return modelAndView;
 	}
 	
+	@ResponseBody
 	@RequestMapping("/member/email_proc_send")
 	public ModelAndView email_proc_send(HttpServletRequest request) {
 		
@@ -170,6 +173,7 @@ public class MemberController {
 		return "/member/id_form";
 	}
 	
+	@ResponseBody
 	@RequestMapping("/member/id_proc_check")
 	public ModelAndView id_proc_check(HttpServletRequest request,Model model) throws Exception {
 		

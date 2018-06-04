@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
@@ -39,6 +40,7 @@ public class ChatController{
 	@Autowired
 	private IChat_MessageDAO mdao;
 	
+	@ResponseBody
 	@RequestMapping("/chat/loginList")
 	public ModelAndView loginList(HttpServletRequest request) {
 		
@@ -73,6 +75,7 @@ public class ChatController{
 		return "redirect:/chat/list";
 	}
 	
+	@ResponseBody
 	@RequestMapping("/chat/deleteProc")
 	public ModelAndView deleteProc(HttpServletRequest request) {
 		
@@ -177,6 +180,7 @@ public class ChatController{
 		return "/chat/chatRead";
 	}
 	
+	@ResponseBody
 	@RequestMapping("/chat/chat_write")
 	public ModelAndView chat_write(HttpServletRequest request) {
 		String nickname = request.getParameter("nickname");
@@ -205,6 +209,7 @@ public class ChatController{
 		
 	}
 	
+	@ResponseBody
 	@RequestMapping("/chat/chat_time")
 	public ModelAndView getTime(HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView(new MappingJacksonJsonView());
@@ -219,6 +224,7 @@ public class ChatController{
 		
 	}
 	
+	@ResponseBody
 	@RequestMapping("/chat/chat_check")
 	public ModelAndView chat_check(HttpServletRequest request) {
 		int table_cnt = Integer.parseInt(request.getParameter("table_cnt"));
@@ -240,6 +246,7 @@ public class ChatController{
 		
 	}
 	
+	@ResponseBody
 	@RequestMapping("/chat/chat_show")
 	public ModelAndView chat_show(HttpServletRequest request) {
 		
@@ -280,6 +287,7 @@ public class ChatController{
 		
 	}
 	
+	@ResponseBody
 	@RequestMapping("/chat/room_check")
 	public ModelAndView room_check(HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView(new MappingJacksonJsonView());
